@@ -1,0 +1,112 @@
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+
+<html>
+sugang 가능한 목록.
+
+<div id="list">
+
+
+</div>
+
+
+</html>
+
+
+
+<script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET", //전송방식을 지정한다 (POST,GET) 
+            url: "/suganglistproc", //호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다. 
+            dataType: "json", //호출한 페이지의 형식이다. xml,json,html,text등의
+            error: function() {
+                alert("통신실패!!!!");
+            },
+            success: function(data) {
+                //alert(data);
+                //alert(data.length)
+                // var temp = JSON.stringify(data);
+                for (var i = 0; i < data.length; i++) {
+                    //alert(data[i].name);
+
+                    //document.write(data[i].name);
+
+                    document.getElementById("list").innerHTML += data[i].name;
+                    document.getElementById("list").innerHTML += "<button onclick = enroll('" + data[i].id + "')>신청하기</button><br>";
+
+                }
+
+
+            }
+        });
+    });
+</script>
+
+<script>
+    function getParams() {
+        // 파라미터가 담길 배열
+        var param = new Array();
+
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        // url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+        url = decodeURIComponent(url);
+
+        var params;
+        // url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
+        params = url.substring(url.indexOf('?') + 1, url.length);
+        // 파라미터 구분자("&") 로 분리
+        params = params.split("&");
+
+        // params 배열을 다시 "=" 구분자로 분리하여 param 배열에 key = value 로 담는다.
+        var size = params.length;
+        var key, value;
+        for (var i = 0; i < size; i++) {
+            key = params[i].split("=")[0];
+            value = params[i].split("=")[1];
+
+            param[key] = value;
+        }
+
+        return param;
+    }
+</script>
+<script>
+    function enroll(code) {
+        var temp = getParams();
+        //alert("id는 잘 받았나 ?");
+        var id = temp["id"];
+
+        //alert(temp["id"]);
+        $(document).ready(function() {
+            $.ajax({
+                type: "GET", //전송방식을 지정한다 (POST,GET) 
+                url: "/enrollproc", //호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다. 
+                data: {
+                    id: code,
+                    stu: id
+                },
+                dataType: "json", //호출한 페이지의 형식이다. xml,json,html,text등의
+                error: function() {
+                    alert("통신실패!!!!");
+                },
+                success: function(data) {
+                    alert("신청하였습니다.");
+                }
+            });
+        });
+
+
+    }
+</script>
