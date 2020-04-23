@@ -1,0 +1,32 @@
+CREATE TABLE student
+(
+id varchar(25),
+password varchar(25),
+name varchar(25),
+major varchar(25)
+);
+
+CREATE TABLE professor
+(
+id varchar(25),
+name varchar(25),
+major varchar(25)
+);
+
+CREATE TABLE subject
+(
+id varchar(25),
+name varchar(25)
+);
+
+
+CREATE TABLE sugang
+(
+id varchar(25),
+stu varchar(25)
+);
+
+1. subject 추가시 위치데이터를 지도 api에서 불러오게,
+2. 동영상 업로드// + 출석률 (찾아보고)
+3. 강의실 입장 (게시판, 쪽지) 
+
