@@ -4,8 +4,8 @@ var mysql = require('mysql');
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'sunwoo',
-    password: 'Sunwoo123!',
+    user: 'root',
+    password: 'eorn',
     database: 'lms'
 });
 dbConnection.connect(); //db접속 //한번만.
