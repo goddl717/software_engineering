@@ -110,6 +110,25 @@ app.get('/lectureroom2', function(req, res) {
     res.sendFile(__dirname + '/app/lectureroom2.html');
 });
 
+app.get('/updatelocationproc', function(req, res) {
+    var x = req.query.lat_input;
+    var y = req.query.lng_input;
+    var code = req.query.code_input;
+    var id = req.query.pid_input
+
+    var sql = 'UPDATE subject SET x=' + x + ', y=' + y +' where id=\'' + code + '\';';
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            //res.send(rows);
+            //res.end();
+            res.redirect("/lectureroom2?id=" + id + "&code=" + code);
+        }
+    });
+});
+
 app.get('/attendance', function(req, res) {
     var code = req.query.code;
     var sid = req.query.sid;
