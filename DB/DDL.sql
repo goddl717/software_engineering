@@ -15,8 +15,8 @@ CREATE TABLE professor(
 CREATE TABLE subject(
     id varchar(25),
     name varchar(25),
-    x double,
-    y double,
+    x INT,
+    y INT,
     randomnum varchar(25),
     pid varchar(25)
 );
