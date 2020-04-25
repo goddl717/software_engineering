@@ -1,0 +1,268 @@
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+
+<html>
+    <head>
+        <title>LMS - 출석하기</title>
+    </head>
+<h1 id="random"></h1>
+
+<h1><input id="random2" type="text"></h1>
+<!--
+<button id="start" onclick="start()"> 출석 시작 하기.</button>-->
+
+<button id="attendance" onclick="attendace()"> 출석하기.</button>
+<div id="info">
+    수업의 좌표 :
+</div>
+
+<div id="distance">
+</div>
+<div id="num">
+
+</div>
+<ul>
+    <li>위도:<span id="latitude"></span></li>
+    <li>경도:<span id="longitude"></span></li>
+</ul>
+
+<button id="btn_once" onclick='start_button()'>위치 인증하기</button>
+
+</html>
+<script>
+    function getParams() {
+        // 파라미터가 담길 배열
+        var param = new Array();
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        // url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+        url = decodeURIComponent(url);
+
+        var params;
+        // url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
+        params = url.substring(url.indexOf('?') + 1, url.length);
+        // 파라미터 구분자("&") 로 분리
+        params = params.split("&");
+
+        // params 배열을 다시 "=" 구분자로 분리하여 param 배열에 key = value 로 담는다.
+        var size = params.length;
+        var key, value;
+        for (var i = 0; i < size; i++) {
+            key = params[i].split("=")[0];
+            value = params[i].split("=")[1];
+
+            param[key] = value;
+        }
+
+        return param;
+    }
+</script>
+
+<script type="text/javascript" language="javascript">
+    var temp = getParams();
+    var code = temp["code"];
+    $.ajax({
+        type: "GET",
+        url: "/load",
+        data: {
+            code: code,
+        },
+        dataType: "json",
+        error: function() {
+            alert('통신실패!! ');
+        },
+        success: function(data) {
+            var temp2 = document.getElementById("random");
+            temp2.innerHTML += data[0].randomnum;
+        }
+    });
+    $("#random").hide();
+</script>
+
+<script>
+    function attendace() {
+        var dis = document.getElementById("distance");
+        var attendance = document.getElementById("attendance");
+        var temp = parseFloat(dis.innerHTML);
+        alert(dis.innerHTML);
+        console.log(temp);
+        if (temp < 2) {
+            alert("출석이 가능합니다.");
+            //값을 비교해서 같으면 실행한다.
+            var temp1 = document.getElementById("random");
+            //var temp2 = document.getElementById("random2");
+            //var temp1 = $('#random').val();
+            var temp2 = $('#random2').val();
+            //alert(temp1.innerHTML);
+            temp1 = temp1.innerHTML;
+            console.log(temp1);
+            console.log(temp2);
+            // temp1 = parseFloat(temp1.innerHTML);
+            // temp2 = parseFloat(temp2.innerHTML);
+            if (temp1 === temp2) {
+                $(document).ready(function() {
+
+                    var temp = getParams();
+                    var sid = temp["id"];
+                    var code = temp["code"];
+                    $.ajax({
+                        type: "GET", //전송방식을 지정한다 (POST,GET) 
+                        url: "/attendance", //호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다. 
+                        data: {
+                            code: code,
+                            sid: sid
+                        },
+                        dataType: "json", //호출한 페이지의 형식이다. xml,json,html,text등의
+                        error: function() {
+                            alert("통신실패!!!!");
+                        },
+                        success: function(data) {
+                            alert("출석 성공.");
+                        }
+
+                    })
+                });
+            } else {
+                alert("번호를 입력하세요!");
+            }
+        } else
+            alert("위치인증을 안했거나 거리가 멀어서 출석할 수 없습니다.");
+
+    }
+</script>
+
+<script>
+</script>
+
+<script>
+    function start() {
+        $(document).ready(function() {
+            var temp = getParams();
+            var sid = temp["id"];
+            var code = temp["code"];
+            $.ajax({
+                type: "GET", //전송방식을 지정한다 (POST,GET) 
+                url: "/loadnumber", //호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다. 
+                data: {
+                    code: code
+                },
+                dataType: "json", //호출한 페이지의 형식이다. xml,json,html,text등의
+                error: function() {
+                    alert("통신실패!!!!");
+                },
+                success: function(data) {
+                    alert(JSON.stringify(data));
+                }
+            })
+        });
+    }
+</script>
+<script>
+</script>
+<script>
+    $(function() {
+        // Geolocation API에 액세스할 수 있는지를 확인
+        if (navigator.geolocation) {
+            //위치 정보를 얻기
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                $('#latitude').html(pos.coords.latitude); // 위도
+                $('#longitude').html(pos.coords.longitude); // 경도
+            });
+        } else {
+            alert("이 브라우저에서는 Geolocation이 지원되지 않습니다.")
+        }
+    });
+</script>
+
+<script type="text/javascript" language="javascript">
+    function start_button() {
+        $(document).ready(function() {
+
+            var temp = getParams();
+            var id = temp["id"];
+            var code = temp["code"];
+            $.ajax({
+                type: "GET", //전송방식을 지정한다 (POST,GET) 
+                url: "/findlocation", //호출 URL을 설정한다. GET방식일경우 뒤에 파라티터를 붙여서 사용해도된다. 
+                data: {
+                    code: code,
+                    id: id
+                },
+                dataType: "json", //호출한 페이지의 형식이다. xml,json,html,text등의
+                error: function() {
+                    alert("통신실패!!!!");
+                },
+                success: function(data) {
+                    //alert(JSON.stringify(data));
+                    //alert(data.length);
+                    //alert(data[0].x);
+                    //alert(data[0].y);
+
+                    var temp = document.getElementById("info");
+                    temp.innerHTML += data[0].x;
+                    temp.innerHTML += " "
+                    temp.innerHTML += data[0].y;
+
+                    var latitude = document.getElementById("latitude");
+                    var longitude = document.getElementById("longitude");
+
+                    //alert(latitude.innerHTML);
+                    var la1 = parseFloat(latitude.innerHTML);
+                    var lo1 = parseFloat(longitude.innerHTML);
+                    var la2 = parseFloat(data[0].x);
+                    var lo2 = parseFloat(data[0].y);
+
+                    console.log(la1);
+                    console.log(la2);
+                    console.log(lo1);
+                    console.log(lo2);
+
+                    var temp = Math.sqrt(Math.pow(la1 - la2, 2) + Math.pow(lo2 - lo1, 2));
+                    //alert("거리는 " + temp);
+                    var distance = document.getElementById("distance");
+                    distance.innerHTML += temp;
+                    var btn = document.getElementById("btn_once");
+                    console.log(btn);
+                    btn.disabled = true;
+                    alert("위치가 인증되었습니다");
+                    $("#random").show();
+                }
+            });
+        });
+    }
+</script>
+<script>
+    function getParams() {
+        // 파라미터가 담길 배열
+        var param = new Array();
+        // 현재 페이지의 url
+        var url = decodeURIComponent(location.href);
+        // url이 encodeURIComponent 로 인코딩 되었을때는 다시 디코딩 해준다.
+        url = decodeURIComponent(url);
+        var params;
+        // url에서 '?' 문자 이후의 파라미터 문자열까지 자르기
+        params = url.substring(url.indexOf('?') + 1, url.length);
+        // 파라미터 구분자("&") 로 분리
+        params = params.split("&");
+
+        // params 배열을 다시 "=" 구분자로 분리하여 param 배열에 key = value 로 담는다.
+        var size = params.length;
+        var key, value;
+        for (var i = 0; i < size; i++) {
+            key = params[i].split("=")[0];
+            value = params[i].split("=")[1];
+            param[key] = value;
+        }
+        return param;
+    }
+</script>
