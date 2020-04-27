@@ -15,11 +15,11 @@ CREATE TABLE stu_account(
     on update cascade
     on delete cascade
     password varchar(25) not null,
-    name varchar(25),
+    name varchar(25)
     foreign key(name) references student(name)
     on update cascade
-    on delete cascade
-    major varchar(25),
+    on delete cascade,
+    major varchar(25)
     foreign key(major) references student(major)
     on update cascade
     on delete cascade
@@ -31,11 +31,11 @@ CREATE TABLE prof_account(
     on update cascade
     on delete cascade
     password varchar(25) not null,
-    name varchar(25),
+    name varchar(25)
     foreign key(name) references professor(name)
     on update cascade
-    on delete cascade
-    major varchar(25),
+    on delete cascade,
+    major varchar(25)
     foreign key(major) references professor(major)
     on update cascade
     on delete cascade
@@ -47,16 +47,16 @@ CREATE TABLE subject(
     x double,
     y double,
     randomnum varchar(3),
-    pid varchar(11),
+    pid varchar(11)
     foreign key(pid) references prof_account(id)
     on update cascade
 );
 
 CREATE TABLE sugang(
-    scode varchar(10),
+    scode varchar(10)
     foreign key(scode) references subject(id)
     on update cascade,
-    sid varchar(11),
+    sid varchar(11)
     foreign key(sid) references stu_account(id)
     on update cascade
 );
