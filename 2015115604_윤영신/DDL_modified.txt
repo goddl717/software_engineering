@@ -1,44 +1,28 @@
+CREATE DATABASE lms;
+
 CREATE TABLE student(
     id varchar(11) primary key not null,
     name varchar(25) not null,
     major varchar(25) not null
 );
 
-CREATE TABLE prof_account(
+CREATE TABLE professor(
     id varchar(11) primary key not null,
     name varchar(25) not null,
     major varchar(25) not null
 );
 CREATE TABLE stu_account(
-    id varchar(11),
-    foreign key(id) references student(id)
-    on update cascade
-    on delete cascade,
+    id varchar(11) primary key not null,
     password varchar(25) not null,
-    name varchar(25),
-    foreign key(name) references student(name)
-    on update cascade
-    on delete cascade,
-    major varchar(25),
-    foreign key(major) references student(major)
-    on update cascade
-    on delete cascade
+    name varchar(25) not null,
+    major varchar(25) not null
 );
 
 CREATE TABLE prof_account(
-    id varchar(11),
-    foreign key(id) references professor(id)
-    on update cascade
-    on delete cascade,
+    id varchar(11) primary key not null,
     password varchar(25) not null,
-    name varchar(25),
-    foreign key(name) references professor(name)
-    on update cascade
-    on delete cascade,
-    major varchar(25),
-    foreign key(major) references professor(major)
-    on update cascade
-    on delete cascade
+    name varchar(25) not null,
+    major varchar(25) not null
 );
 
 CREATE TABLE subject(
