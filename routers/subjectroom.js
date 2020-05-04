@@ -94,4 +94,24 @@ router.get('/uploadnoteproc', function(req, res) {
 });
 
 
+router.get('/videolist', function(req, res) {
+
+    var code = req.query.code;
+    var id = req.query.id;
+
+    console.log(code)
+    console.log(id)
+
+    var sql = 'select * from video where code = "' + code + '"';
+    console.log(sql);
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('videolist', { data: rows });
+        }
+    });
+});
 module.exports = router;
