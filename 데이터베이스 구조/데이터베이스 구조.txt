@@ -27,6 +27,18 @@ id varchar(25),
 stu varchar(25)
 );
 
+CREATE TABLE note
+(
+num int NOT NULL AUTO_INCREMENT primary key,
+code varchar(25),
+title varchar(25),
+content varchar(25),
+views int
+);
+
+insert into note(title,content,views) value("제목","내용",1);
+
+
 1. subject 추가시 위치데이터를 지도 api에서 불러오게,
 2. 동영상 업로드// + 출석률 (찾아보고)
 3. 강의실 입장 (게시판, 쪽지) 

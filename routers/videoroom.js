@@ -24,7 +24,7 @@ router.get('/', function(req, res) {
             console.log(rows);
             temp = JSON.stringify(rows);
             // console.log(temp);
-            res.render('subjectroom', { id: id, code: code, data: rows });
+            res.render('videoroom', { id: id, code: code, data: rows });
         }
     });
     console.log(temp);
