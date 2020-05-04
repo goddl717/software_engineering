@@ -2,23 +2,48 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 
+var login1Router = require('./routers/login1');
+var login2Router = require('./routers/login2');
+var subjectRoomRouter = require('./routers/subjectroom');
+
+
 var dbConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'eorn',
     database: 'lms'
 });
+
 dbConnection.connect(); //db접속 //한번만.
+
+
+app.set('views', __dirname + '/views');
+app.set('view engine', 'ejs');
+
+
+//view로 json 파일을 보낸다. 
+//이런 의미로 봐도 될듯.
+
+
+
 app.get('/makesubject', function(req, res) {
     res.sendFile(__dirname + '/app/makesubject.html');
 });
 
+app.use('/login1', login1Router);
+app.use('/login2', login2Router);
+app.use('/subjectroom', subjectRoomRouter);
+
+
+/*
 app.get('/login2', function(req, res) {
     res.sendFile(__dirname + '/app/login2.html');
 });
 app.get('/login1', function(req, res) {
     res.sendFile(__dirname + '/app/login1.html');
 });
+*/
+
 app.get('/main', function(req, res) {
     res.sendFile(__dirname + '/app/main.html');
 });
@@ -293,9 +318,15 @@ app.get('/signup1proc', function(req, res) {
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
             console.log(err);
+
+            // res.send({ state: 0 });
+
             res.redirect('/signup1');
         } else {
+
             console.log(rows.insertId);
+            // res.send({ state: 1, id = id });
+
             res.redirect('/main?id=' + id);
         }
     });
@@ -342,9 +373,8 @@ app.get('/login1proc', function(req, res) {
             res.end();
         }
     });
-
-
 });
+
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/app/index.html');
