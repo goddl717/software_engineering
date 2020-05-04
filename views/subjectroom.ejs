@@ -22,8 +22,8 @@
         </div>
         <div class="col-md-2">
             <ul>
-                <li><a href="#home">공지사항</a></li>
-                <li><a href="#news">강의 시청하기</a></li>
+                <li><a href="/subjectroom?id=<%=id%>&code=<%=code%>">공지사항</a></li>
+                <li><a href="subject/video?id=<%=id%>&code=<%=code%>">강의 시청하기</a></li>
                 <li><a href="#contact">질문하기</a></li>
                 <li><a href="#about">사용방법</a></li>
             </ul>
@@ -45,11 +45,19 @@
                             <th>
                                 <%=data[i].num%>
                             </th>
+
+
                             <td>
-                                <%=data[i].title%>
+
+                                <a href="subjectroom/viewplus?id=<%=id%>&code=<%=code%>&num=<%=data[i].num%>&view=<%=data[i].views%>">
+
+                                    <%=data[i].title%>
+                                </a>
                             </td>
                             <td>
+
                                 <%=data[i].content%>
+                                    </a>
                             </td>
                             <td>
                                 <%=data[i].views%>

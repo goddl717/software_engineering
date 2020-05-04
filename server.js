@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var login1Router = require('./routers/login1');
 var login2Router = require('./routers/login2');
 var subjectRoomRouter = require('./routers/subjectroom');
-var videoRoomRouter = require('./routers/videoroom');
+//var videoRoomRouter = require('./routers/videoroom');
 
 
 var dbConnection = mysql.createConnection({
@@ -34,7 +34,7 @@ app.get('/makesubject', function(req, res) {
 app.use('/login1', login1Router);
 app.use('/login2', login2Router);
 app.use('/subjectroom', subjectRoomRouter);
-app.use('/videoroom', videoRoomRouter);
+//app.use('/videoroom', videoRoomRouter);
 
 /*
 app.get('/login2', function(req, res) {
