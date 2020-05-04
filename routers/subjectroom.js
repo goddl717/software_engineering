@@ -70,27 +70,26 @@ router.get('/viewplus', function(req, res) {
 
 router.get('/uploadnoteproc', function(req, res) {
     var title = req.query.title;
-    var content = req.query.comment;
+    var content = req.query.content;
     var code = req.query.code;
-
+    var id = req.query.id;
 
     console.log(title)
-    console.log(comment)
-
-
+    console.log(content)
 
     var sql = 'INSERT INTO note(code,title,content,views)VALUES(?,?,?,?)';
     console.log(sql);
 
     params = [code, title, content, 1];
-    conn.query(sql, params, function(err, rows, fields) {
+    dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
             console.log(rows.insertId);
-            res.redirect('/subjectroom?id=' + id + '&code=' + code + '&num=' + num);
+            res.redirect('/subjectroom?id=' + id + '&code=' + code);
         }
     });
+
 
 });
 
