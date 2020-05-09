@@ -36,6 +36,13 @@ content varchar(25),
 views int
 );
 
+CREATE TABLE attendace
+(
+code varchar(25),
+sid varchar(25),
+date date
+);
+
 insert into note(title,content,views) value("제목","내용",1);
 
 

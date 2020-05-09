@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 
+var multer = require('multer');
+var upload = multer({ dest: "/videos" });
+
 var dbConnection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -114,4 +117,11 @@ router.get('/videolist', function(req, res) {
         }
     });
 });
+
+router.post('/uploadvideo', function(req, res) {
+    upload.
+    res.send('Uploaded: ' + req.video);
+});
+
+
 module.exports = router;
