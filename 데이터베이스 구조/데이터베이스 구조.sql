@@ -36,6 +36,16 @@ content varchar(25),
 views int
 );
 
+CREATE TABLE board(
+    idx int(11) not null AUTO_INCREMENT,
+    name varchar(25),
+    title varchar(50),
+    content mediumtext,
+    regdate datetime not null default current_timestamp,
+    primary key (idx)
+)
+DEFAULT character set = utf8;
+
 CREATE TABLE attendace
 (
 code varchar(25),
@@ -43,10 +53,4 @@ sid varchar(25),
 date date
 );
 
-insert into note(title,content,views) value("제목","내용",1);
-
-
-1. subject 추가시 위치데이터를 지도 api에서 불러오게,
-2. 동영상 업로드// + 출석률 (찾아보고)
-3. 강의실 입장 (게시판, 쪽지) 
-
+-- insert into note(title,content,views) value("제목","내용",1);
