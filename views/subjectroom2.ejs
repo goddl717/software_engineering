@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<html>
+
+<head>
+
+    <body>
+        <div>
+            <%=id%>님 반갑습니다.
+        </div>
+        <div class="col-md-2">
+            <ul>
+                <li><a href="/subjectroom2?id=<%=id%>&code=<%=code%>">공지사항</a></li>
+                <li><a href="subjectroom2/videolist?id=<%=id%>&code=<%=code%>">강의 시청하기</a></li>
+                <li><a href="#contact">질문하기</a></li>
+                <li><a href="#about">사용방법</a></li>
+            </ul>
+        </div>
+
+        <div class="col-md-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">내용</th>
+                        <th scope="col">조회 수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0 ; i < data.length ; i++){%>
+                        <tr>
+                            <th>
+                                <%=data[i].num%>
+                            </th>
+
+
+                            <td>
+
+                                <a href="subjectroom2/viewplus?id=<%=id%>&code=<%=code%>&num=<%=data[i].num%>&view=<%=data[i].views%>">
+
+                                    <%=data[i].title%>
+                                </a>
+                            </td>
+                            <td>
+
+                                <%=data[i].content%>
+                                    </a>
+                            </td>
+                            <td>
+                                <%=data[i].views%>
+                            </td>
+                        </tr>
+                        <% }%>
+                </tbody>
+
+            </table>
+
+        </div>
+        <button type="button" onclick="location.href='joinUs.jsp' ">글쓰기</button>
+    </body>
+
+</html>
