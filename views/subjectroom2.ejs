@@ -21,54 +21,11 @@
         </div>
         <div class="col-md-2">
             <ul>
-                <li><a href="/subjectroom2?id=<%=id%>&code=<%=code%>">공지사항</a></li>
-                <li><a href="subjectroom2/videolist?id=<%=id%>&code=<%=code%>">강의 시청하기</a></li>
-                <li><a href="#contact">질문하기</a></li>
-                <li><a href="#about">사용방법</a></li>
+                <li><a href="subjectroom2/announcement?id=<%=id%>&code=<%=code%>">공지사항</a></li>
+                <li><a href="subjectroom2/videolist?id=<%=id%>&code=<%=code%>">온라인 강의</a></li>
+                <li><a href="#contact">Q&A</a></li>
             </ul>
-        </div>
-
-        <div class="col-md-4">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">번호</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">내용</th>
-                        <th scope="col">조회 수</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% for(var i = 0 ; i < data.length ; i++){%>
-                        <tr>
-                            <th>
-                                <%=data[i].num%>
-                            </th>
-
-
-                            <td>
-
-                                <a href="subjectroom2/viewplus?id=<%=id%>&code=<%=code%>&num=<%=data[i].num%>&view=<%=data[i].views%>">
-
-                                    <%=data[i].title%>
-                                </a>
-                            </td>
-                            <td>
-
-                                <%=data[i].content%>
-                                    </a>
-                            </td>
-                            <td>
-                                <%=data[i].views%>
-                            </td>
-                        </tr>
-                        <% }%>
-                </tbody>
-
-            </table>
-
-        </div>
-        <button type="button" onclick="location.href='joinUs.jsp' ">글쓰기</button>
+        </div>        
     </body>
 
 </html>

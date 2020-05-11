@@ -41,7 +41,6 @@ router.get('/content', function(req, res) {
     var code = req.query.code;
     var temp;
     res.render('content', { id: id, code: code });
-
 });
 
 router.get('/viewplus', function(req, res) {
@@ -123,6 +122,33 @@ router.get('/videolist', function(req, res) {
 router.post('/uploadvideo', function(req, res) {
     upload.
     res.send('Uploaded: ' + req.video);
+});
+
+router.get('/announcement', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    console.log(sql);
+    var temp;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            temp = JSON.stringify(rows);
+            // console.log(temp);
+            res.render('announcement', { id: id, code: code, data: rows });
+        }
+    });
+    console.log(temp);
+});
+
+router.get('/write', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var temp;
+    res.render('write', { id: id, code: code });
 });
 
 
