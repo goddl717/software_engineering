@@ -38,6 +38,7 @@ views int
 
 CREATE TABLE board(
     idx int(11) not null AUTO_INCREMENT,
+    code varchar(25),
     name varchar(25),
     title varchar(50),
     content mediumtext,

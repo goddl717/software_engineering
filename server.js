@@ -1,22 +1,26 @@
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
+var fs = require('fs');
+var ejs = require('ejs');
 
 var login1Router = require('./routers/login1');
 var login2Router = require('./routers/login2');
 var subjectRoomRouter = require('./routers/subjectroom');
+var subjectRoom2Router = require('./routers/subjectroom2');
 //var videoRoomRouter = require('./routers/videoroom');
 
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'eorn',
+    // user: 'root',
+    // password: 'eorn',
+    user: 'sunwoo',
+    password: 'Sunwoo123!',
     database: 'lms'
 });
 
 dbConnection.connect(); //db접속 //한번만.
-
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
@@ -34,6 +38,7 @@ app.get('/makesubject', function(req, res) {
 app.use('/login1', login1Router);
 app.use('/login2', login2Router);
 app.use('/subjectroom', subjectRoomRouter);
+app.use('/subjectroom2', subjectRoom2Router);
 //app.use('/videoroom', videoRoomRouter);
 
 /*

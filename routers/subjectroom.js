@@ -7,8 +7,10 @@ var upload = multer({ dest: "/videos" });
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'eorn',
+    // user: 'root',
+    // password: 'eorn',
+    user: 'sunwoo',
+    password: 'Sunwoo123!',
     database: 'lms'
 });
 
