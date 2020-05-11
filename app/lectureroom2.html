@@ -15,6 +15,7 @@
 출석시작하기 페이지.
 <h1 id="random"></h1>
 <button id="start" onclick="start()"> 랜덤 번호 생성하기.</button>
+<button id="show" onclick= "show_()"> 출석 현황.</button>
 <button id="start" onclick="finish()"> 출석 종료.</button>
 
 
@@ -41,6 +42,39 @@
 -->
 
 </html>
+
+function show_() {
+        $(document).ready(function() {
+            var temp = getParams();
+            var code = temp["code"];
+
+            $.ajax({
+                type: "GET", 
+                url: "/attendance_status", 
+                data: {
+                    code: code
+                },
+                dataType: "json", 
+                error: function() {
+                    alert("통신실패!!!!");
+                },
+                success: function(data) {
+                    alert("학생현황");
+
+                    var popup = window.open("","Attendance", "top = 100 left = 100 width = 300 ,heigth = 50, scrollbars=yes, resizable=yes");
+                    for(var i=0; i<data.length;i++)
+                    {
+                        var id = data[i]["sid"]
+                        var date = data[i]["date"].split("T");
+                        popup.document.write(`[학생 ID : ${id}] [날짜 : ${date[0]}] <br>`);
+                        
+                    }
+                }
+            })
+        });
+    }
+</script>
+
 <script>
     function getParams() {
         // 파라미터가 담길 배열
