@@ -172,6 +172,19 @@ app.get('/attendance', function(req, res) {
 
 });
 
+app.get('/attendance_status', function(req,res){
+    var code = req.query.code;
+    var sql = `select * from attendance where code = "${code}" and date = curdate()`;
+    
+    dbConnection.query(sql, code, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.send(rows);
+        }
+    });
+
+});
 
 
 app.get('/enrollproc', function(req, res) {
