@@ -8,7 +8,6 @@ var login1Router = require('./routers/login1');
 var login2Router = require('./routers/login2');
 var subjectRoomRouter = require('./routers/subjectroom');
 var subjectRoom2Router = require('./routers/subjectroom2');
-//var videoRoomRouter = require('./routers/videoroom');
 
 
 var dbConnection = mysql.createConnection({
@@ -39,7 +38,6 @@ app.use('/login1', login1Router);
 app.use('/login2', login2Router);
 app.use('/subjectroom', subjectRoomRouter);
 app.use('/subjectroom2', subjectRoom2Router);
-//app.use('/videoroom', videoRoomRouter);
 
 /*
 app.get('/login2', function(req, res) {
