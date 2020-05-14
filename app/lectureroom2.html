@@ -42,7 +42,7 @@
 -->
 
 </html>
-//show attendance 
+
 <script>
 function show_() {
         $(document).ready(function() {
@@ -60,14 +60,15 @@ function show_() {
                     alert("통신실패!!!!");
                 },
                 success: function(data) {
-                    alert("학생현황");
-
-                    var popup = window.open("","Attendance", "top = 100 left = 100 width = 300 ,heigth = 50, scrollbars=yes, resizable=yes");
+                    alert("출석현황");
+                    var popup = window.open("","Attendance", "top = 100, left = 100, width = 500 ,height = 100, scrollbars=yes, resizable=yes");
+                    var date = data[0]["date"].split("T");
+                    popup.document.write(`[오늘 날짜] : ${date[0]}<br>`);
+                    popup.document.write(`[학생 ID:]<br>`);
                     for(var i=0; i<data.length;i++)
                     {
-                        var id = data[i]["sid"]
-                        var date = data[i]["date"].split("T");
-                        popup.document.write(`[학생 ID : ${id}] [날짜 : ${date[0]}] <br>`);
+                        var id = data[i]["sid"];
+                        popup.document.write(`${id}]<br>`);
                         
                     }
                 }
