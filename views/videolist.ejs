@@ -22,17 +22,19 @@
         </div>
         <% for(var i = 0 ; i < data.length ; i++){%>
 
-            <%=data[i].name%>
+            <p><%=data[i].code%></p>
                 <% }%>
     </body>
     <br>
     <br>
     <div>
-        <form method="post" enctype='multipart/form-data' action="/subjectroom/uploadvideo">
-            <input type="file" name="video">
+        
+        <form method="post" enctype='multipart/form-data' action="/subjectroom2/uploadvideo">
+            <input type="file" name="videoFile">
+            <input type="hidden" name="id" value="<%=id%>">
+            <input type="hidden" name="code" value="<%=code%>">
             <input type="submit">
         </form>
 
     </div>
-
 </html>
