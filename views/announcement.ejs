@@ -15,6 +15,9 @@
 
 <head>
     <h1>공지사항</h1>
+    <div>
+        <%=id%>님 반갑습니다.
+    </div>
     <body>
         <div class="col-md-4">
             <table class="table">
@@ -59,9 +62,15 @@
 
         </div>
 
-        <!-- <button type="button" onclick="location.href='http://webtong.kr' ">글쓰기</button> -->
-        <button type="button" onClick="location.href='announcement/write'">글쓰기</button>
+        <form action="/subjectroom2/announcement/write" method="get">
+            <input name="id" value="" type="hidden">
+            <input type="submit" value="글쓰기">
+        </form>
 
     </body>
 
 </html>
+
+<script>
+    document.getElementsByName("id")[0].value = id;
+</script>
