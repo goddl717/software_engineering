@@ -2,8 +2,18 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 
+//multer
 var multer = require('multer');
-var upload = multer({ dest: "/videos" });
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'videos/');
+    },
+    filename: function (req, file, cb) {
+        var extension = path.extname(file.originalname);
+        cb(null, file.originalname + extension);
+    }
+});
+var upload = multer({ storage: storage });
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
@@ -118,12 +128,11 @@ router.get('/videolist', function(req, res) {
         }
     });
 });
-
-router.post('/uploadvideo', function(req, res) {
-    upload.
-    res.send('Uploaded: ' + req.video);
+//파일 업로드 
+router.post('/uploadvideo', upload.single("videoFile"),function(req, res) {
+    //res.render();
+    //res.redirect();
 });
-
 router.get('/announcement', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
