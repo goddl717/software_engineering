@@ -163,12 +163,13 @@ router.get('/announcement', function(req, res) {
     console.log(temp);
 });
 
-router.get('/write', function(req, res) {
+router.get('/announcement/write', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var temp;
+    console.log(id);
+
     res.render('write', { id: id, code: code });
 });
-
+  
 
 module.exports = router;

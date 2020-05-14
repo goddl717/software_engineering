@@ -14,11 +14,19 @@
 <html>
 
 <head>
+</head>
 
     <body>
+
         <div>
-            글쓰기
+            <%=id%>님 반갑습니다.
         </div>
+
+        <form action="/writeProc" method="get">
+            제목 : <input type="text" name="name"><br>
+            내용 : <p><textarea cols="50" rows="10"></textarea></p>
+            <input type="submit" value="저장">
+        </form>
 
     </body>
 
