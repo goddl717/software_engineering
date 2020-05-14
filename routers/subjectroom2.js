@@ -129,9 +129,20 @@ router.get('/videolist', function(req, res) {
 });
 //파일 업로드 
 router.post('/uploadvideo', upload.single("videoFile"),function(req, res) {
-    //res.render();
-    //res.redirect();
+    var id = req.body.id;
+    var code = req.body.code;
+    console.log(req.file);
+    
+    var sql = 'insert into video(code)values(?)';
+    dbConnection.query(sql,code, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.redirect(`/subjectroom2/videolist?id=${id}&code=${code}`);
+        }
+    });
 });
+
 router.get('/announcement', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
