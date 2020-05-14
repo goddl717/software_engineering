@@ -9,8 +9,7 @@ var storage = multer.diskStorage({
         cb(null, 'videos/');
     },
     filename: function (req, file, cb) {
-        var extension = path.extname(file.originalname);
-        cb(null, file.originalname + extension);
+        cb(null, file.originalname);
     }
 });
 var upload = multer({ storage: storage });
