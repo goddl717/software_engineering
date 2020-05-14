@@ -115,15 +115,11 @@ router.get('/videolist', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('videolist', { data: rows });
+            res.render('videolist2', { data: rows, id: id, code:code });
         }
     });
 });
 
-router.post('/uploadvideo', function(req, res) {
-    upload.
-    res.send('Uploaded: ' + req.video);
-});
-
+//학생측 강의 영상 업로드 삭제
 
 module.exports = router;
