@@ -102,8 +102,6 @@ router.get('/uploadnoteproc', function(req, res) {
             res.redirect('/subjectroom2?id=' + id + '&code=' + code);
         }
     });
-
-
 });
 
 
@@ -166,10 +164,40 @@ router.get('/announcement', function(req, res) {
 router.get('/announcement/write', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
+    var sql = 'SELECT name from professor where id =' + id;
+
+    // res.render('write', { id: id, code: code });
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('write', { id: id, code: code, data: rows });
+        }
+    });
+});
+
+router.get('/writeProc', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var name = req.query.name;
+    var title = req.query.title;
+    var content = req.query.content;
     console.log(id);
 
-    res.render('write', { id: id, code: code });
-});
+    var sql = 'INSERT INTO board(code,name,title,content) VALUES(?,?,?,?)';
+
+    params = [code, name, title, content, 0];
+    dbConnection.query(sql, params, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows.insertId);
+            res.redirect('/subjectroom2/announcement?id=' + id + '&code=' + code);
+        }
+    });
+})
   
 
 module.exports = router;
