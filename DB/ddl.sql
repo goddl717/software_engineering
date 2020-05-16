@@ -27,15 +27,6 @@ id varchar(25),
 stu varchar(25)
 );
 
-CREATE TABLE note
-(
-num int NOT NULL AUTO_INCREMENT primary key,
-code varchar(25),
-title varchar(25),
-content varchar(25),
-views int
-);
-
 CREATE TABLE board(
     idx int(11) not null AUTO_INCREMENT,
     code varchar(25),
@@ -43,7 +34,7 @@ CREATE TABLE board(
     title varchar(50),
     content mediumtext,
     regdate datetime not null default current_timestamp,
-    views int,
+    views int default 1,
     primary key (idx)
 )
 DEFAULT character set = utf8;
