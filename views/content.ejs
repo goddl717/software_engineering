@@ -17,8 +17,16 @@
 
     <body>
         <div>
-            내용
+            <%=data[0].content%>
         </div>
+
+        <form action="/subjectroom/backAnnouncementList" method="get">
+            <input type="submit" value="목록">
+            <input name="idx" type="hidden" value=<%=idx%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+            <input name="views" type="hidden" value=<%=views%>>
+        </form>
 
     </body>
 

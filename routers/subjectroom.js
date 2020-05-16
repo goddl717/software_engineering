@@ -18,7 +18,7 @@ var dbConnection = mysql.createConnection({
 router.get('/', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM note where code ="' + code + '";';
+    var sql = 'SELECT * FROM board where code ="' + code + '";';
     console.log(sql);
     var temp;
 
@@ -35,31 +35,12 @@ router.get('/', function(req, res) {
     console.log(temp);
 });
 
-
-router.get('/content', function(req, res) {
+router.get('/announcement/content', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var temp;
-    res.render('content', { id: id, code: code });
-
-});
-
-router.get('/viewplus', function(req, res) {
-    var id = req.query.id;
-    var code = req.query.code;
-    var num = req.query.num;
-    var view = req.query.view;
-
-    console.log("view추가");
-    console.log(id)
-    console.log(code)
-    console.log(num)
-    console.log(view)
-
-
-    view = parseInt(view);
-
-    var sql = 'update note set views =' + (view + 1) + ' where num =' + num;
+    var idx = req.query.idx;
+    var views = req.query.views;
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";';
     console.log(sql);
 
     dbConnection.query(sql, function(err, rows, fields) {
@@ -67,37 +48,30 @@ router.get('/viewplus', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.redirect('/subjectroom/content?id=' + id + '&code=' + code + '&num=' + num);
+            res.render('content', { id: id, code: code, idx: idx, views: views, data: rows });
         }
     });
 });
 
-
-router.get('/uploadnoteproc', function(req, res) {
-    var title = req.query.title;
-    var content = req.query.content;
-    var code = req.query.code;
+router.get('/backAnnouncementList', function(req, res) {    // 공지사항 list로 돌아가면서 조회수 +
     var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var views = req.query.views;
+    views = parseInt(views);
 
-    console.log(title)
-    console.log(content)
-
-    var sql = 'INSERT INTO note(code,title,content,views)VALUES(?,?,?,?)';
+    var sql = 'update board set views =' + (views + 1) + ' where idx =' + idx;
     console.log(sql);
 
-    params = [code, title, content, 1];
-    dbConnection.query(sql, params, function(err, rows, fields) {
+    dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
-            console.log(rows.insertId);
-            res.redirect('/subjectroom?id=' + id + '&code=' + code);
+            console.log(rows);
+            res.redirect('/subjectroom/announcement?id=' + id + '&code=' + code);
         }
     });
-
-
 });
-
 
 router.get('/videolist', function(req, res) {
 
@@ -120,6 +94,24 @@ router.get('/videolist', function(req, res) {
     });
 });
 
-//학생측 강의 영상 업로드 삭제
+router.get('/announcement', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    console.log(sql);
+    var temp;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            temp = JSON.stringify(rows);
+            res.render('announcement', { id: id, code: code, data: rows });
+        }
+    });
+    console.log(temp);
+});
+
 
 module.exports = router;

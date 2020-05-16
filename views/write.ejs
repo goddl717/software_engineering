@@ -18,15 +18,13 @@
 
     <body>
 
-        <div>
-            <%=id%>님 반갑습니다.
-        </div>
-
         <form action="/subjectroom2/writeProc" method="get">
             제목 : <input type="text" name="title"><br>
             내용 : <p><textarea cols="50" rows="10" name="content"></textarea></p>            
             <input type="submit" value="저장">
-            <input type="hidden" value=<%=data[0].name%>>
+            <input name="name" type="hidden" value=<%=data[0].name%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
         </form>
         
     </body>
