@@ -121,7 +121,10 @@ router.post('/uploadvideo', upload.single("videoFile"),function(req, res) {
 router.get('/announcement2', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+               FROM board AS B, (SELECT @rownum:=0) N \
+               where code = "' + code + '" \
+               order by ROWNUM desc';
     console.log(sql);
     var temp;
 

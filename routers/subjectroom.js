@@ -97,7 +97,10 @@ router.get('/videolist', function(req, res) {
 router.get('/announcement', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+               FROM board AS B, (SELECT @rownum:=0) N \
+               where code = "' + code + '" \
+               order by ROWNUM desc';
     console.log(sql);
     var temp;
 
@@ -108,6 +111,25 @@ router.get('/announcement', function(req, res) {
             console.log(rows);
             temp = JSON.stringify(rows);
             res.render('announcement', { id: id, code: code, data: rows });
+        }
+    });
+    console.log(temp);
+});
+
+router.get('/QnA', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    console.log(sql);
+    var temp;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            temp = JSON.stringify(rows);
+            res.render('QnA', { id: id, code: code, data: rows });
         }
     });
     console.log(temp);
