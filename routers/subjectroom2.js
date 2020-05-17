@@ -44,7 +44,7 @@ router.get('/', function(req, res) {
     console.log(temp);
 });
 
-router.get('/announcement/content', function(req, res) {
+router.get('/announcement2/content2', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
@@ -57,7 +57,7 @@ router.get('/announcement/content', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('content', { id: id, code: code, idx: idx, views: views, data: rows });
+            res.render('content2', { id: id, code: code, idx: idx, views: views, data: rows });
         }
     });
 });
