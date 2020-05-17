@@ -46,3 +46,8 @@ CREATE TABLE attendace
     date date
 );
 
+-- incomplete..
+CREATE TABLE video(
+    code varchar(25)
+);
+
