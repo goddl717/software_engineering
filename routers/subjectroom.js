@@ -40,6 +40,7 @@ router.get('/announcement/content', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
+    var category = "announcement";
     var sql = 'SELECT * FROM board where idx ="' + idx + '";';
     console.log(sql);
 
@@ -48,12 +49,14 @@ router.get('/announcement/content', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('content', { id: id, code: code, idx: idx, views: views, data: rows });
+            res.render('content', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
         }
     });
 });
 
+// 게시판 공용
 router.get('/backAnnouncementList', function(req, res) {    // 공지사항 list로 돌아가면서 조회수 +
+    var category = req.query.category;
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
@@ -68,7 +71,11 @@ router.get('/backAnnouncementList', function(req, res) {    // 공지사항 list
             console.log(err);
         } else {
             console.log(rows);
-            res.redirect('/subjectroom/announcement?id=' + id + '&code=' + code);
+            if(category == "announcement"){
+                res.redirect('/subjectroom/announcement?id=' + id + '&code=' + code);
+            }else {
+                res.redirect('/subjectroom/QnA?id=' + id + '&code=' + code);
+            }
         }
     });
 });
@@ -99,7 +106,7 @@ router.get('/announcement', function(req, res) {
     var code = req.query.code;
     var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
                FROM board AS B, (SELECT @rownum:=0) N \
-               where code = "' + code + '" \
+               where code = "' + code + '" AND category = "announcement" \
                order by ROWNUM desc';
     console.log(sql);
     var temp;
@@ -119,7 +126,10 @@ router.get('/announcement', function(req, res) {
 router.get('/QnA', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM board where code ="' + code + '";';
+    var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+                FROM board AS B, (SELECT @rownum:=0) N \
+                where code = "' + code + '" AND category = "QnA" \
+                order by ROWNUM desc';
     console.log(sql);
     var temp;
 
@@ -134,6 +144,45 @@ router.get('/QnA', function(req, res) {
     });
     console.log(temp);
 });
+
+router.get('/QnA/write', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var category = "QnA";
+    var sql = 'SELECT name from student where id =' + id;   // QnA는 학생이 작성
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('write', { category: category, id: id, code: code, data: rows });
+        }
+    });
+});
+
+router.get('/QnA/content', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var views = req.query.views;
+    var category = "QnA";
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";';
+    console.log(sql);
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+        }
+    });
+});
+
+// router.get('/writeProc', function(req, res) {
+//     // subjectroom2.js 에 있음
+// })
 
 
 module.exports = router;

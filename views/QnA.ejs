@@ -18,7 +18,52 @@
     <div>
         <%=id%>님 반갑습니다.
     </div>
+    
     <body>
+        <div class="col-md-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">등록일</th>
+                        <th scope="col">조회 수</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i = 0 ; i < data.length ; i++){%>
+                        <tr>
+                            <th>
+                                <%=data[i].ROWNUM%>
+                            </th>
+                            <td>
+                                <a href="/subjectroom/QnA/content?id=<%=id%>&code=<%=code%>&idx=<%=data[i].idx%>&views=<%=data[i].views%>">
+                                    <%=data[i].title%>
+                                </a>
+                            </td>
+                            <td>
+                                <%=data[i].name%>
+                            </td>
+                            <td>
+                                <%=data[i].regdate%>
+                            </td>
+                            <td>
+                                <%=data[i].views%>
+                            </td>
+                        </tr>
+                        <% }%>
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <form action="/subjectroom/QnA/write" method="get">
+            <input type="submit" value="글쓰기">
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+        </form>
         
     </body>
 

@@ -14,10 +14,11 @@
 <html>
 
 <head>
-    <h1>공지사항</h1>
+    <h1>Q&A</h1>
     <div>
         <%=id%>님 반갑습니다.
     </div>
+    
     <body>
         <div class="col-md-4">
             <table class="table">
@@ -37,7 +38,7 @@
                                 <%=data[i].ROWNUM%>
                             </th>
                             <td>
-                                <a href="/subjectroom2/announcement2/content2?id=<%=id%>&code=<%=code%>&idx=<%=data[i].idx%>&views=<%=data[i].views%>">
+                                <a href="/subjectroom2/QnA2/content2?id=<%=id%>&code=<%=code%>&idx=<%=data[i].idx%>&views=<%=data[i].views%>">
                                     <%=data[i].title%>
                                 </a>
                             </td>
@@ -57,12 +58,6 @@
             </table>
 
         </div>
-
-        <form action="/subjectroom2/announcement2/write" method="get">
-            <input type="submit" value="글쓰기">
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-        </form>
         
     </body>
 
