@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
+var fs = require('fs');
 
 //multer
 var multer = require('multer');
@@ -90,14 +91,14 @@ router.get('/backAnnouncementList2', function(req, res) {    // 공지사항 lis
     });
 });
 
+//비디오 list
 router.get('/videolist', function(req, res) {
 
     var code = req.query.code;
     var id = req.query.id;
-
-    console.log(code)
-    console.log(id)
-
+    console.log(code);
+    console.log(id);
+    
     var sql = 'select * from video where code = "' + code + '"';
     console.log(sql);
 
@@ -106,18 +107,25 @@ router.get('/videolist', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('videolist', { data: rows });
+            res.render('videolist', { data: rows, id : id, code:code  });
         }
     });
 });
+
 //파일 업로드 
 router.post('/uploadvideo', upload.single("videoFile"),function(req, res) {
     var id = req.body.id;
     var code = req.body.code;
+    var path = (req.file.path).toString();
+
     console.log(req.file);
-    
-    var sql = 'insert into video(code)values(?)';
-    dbConnection.query(sql,code, function(err, rows, fields) {
+    console.log(path);
+    console.log(id);
+    console.log(code);
+
+    var sql = 'insert into video(code,date,path) values(?,curdate(),?)';
+    var param = [code,path];
+    dbConnection.query(sql,param, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
@@ -125,28 +133,29 @@ router.post('/uploadvideo', upload.single("videoFile"),function(req, res) {
         }
     });
 });
-
-router.get('/announcement2', function(req, res) {
-    var id = req.query.id;
-    var code = req.query.code;
-    var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
-               FROM board AS B, (SELECT @rownum:=0) N \
-               where code = "' + code + '" AND category = "announcement" \
-               order by ROWNUM desc';
-    console.log(sql);
-    var temp;
-
-    dbConnection.query(sql, function(err, rows, fields) {
+//비디오삭제
+router.post('/deleteVid', function(req,res){
+    var id = req.body.id;
+    var code = req.body.code;
+    var idx = req.body.idx;
+    
+    var sql = `delete from video where idx = "${idx}";`+` alter table video AUTO_INCREMENT=1;`+` SET @COUNT = 0;`+` UPDATE video SET video.idx = @COUNT:=@COUNT+1;`+`alter table video AUTO_INCREMENT=${idx}`;
+    dbConnection.query(sql, function(err, rows,fields) {
         if (err) {
             console.log(err);
         } else {
-            console.log(rows);
-            temp = JSON.stringify(rows);
-            // console.log(temp);
-            res.render('announcement2', { id: id, code: code, data: rows });
+            fs.unlink(`${req.body.path}`,function(err){
+                if(err){
+                    console.log(err);
+                    alert("통신실패!!");
+                }
+                else{
+                    console.log("deleted");
+                }
+            });
+            res.redirect(`/subjectroom2/videolist?id=${id}&code=${code}`);
         }
     });
-    console.log(temp);
 });
 
 router.get('/announcement2/write', function(req, res) {
