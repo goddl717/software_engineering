@@ -40,9 +40,33 @@ CREATE TABLE board(
     content mediumtext,
     regdate datetime not null default current_timestamp,
     views int default 1,
-    reply mediumtext,       -- QnA 전용 답변
-    comments varchar(50),   -- 댓글
     primary key (idx)
+)
+DEFAULT character set = utf8;
+
+-- 댓글
+CREATE TABLE board_comments(
+    idx int(11) not null,
+    Cnum int(11) not null AUTO_INCREMENT,
+    commenterId varchar(25),
+    commenterName varchar(25),
+    comments varchar(50),
+    commentsDate datetime not null default current_timestamp,
+    primary key (Cnum),
+    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE
+)
+DEFAULT character set = utf8;
+
+-- QnA 답변 (교수)
+CREATE TABLE board_reply(
+    idx int(11) not null,
+    Rnum int(11) not null AUTO_INCREMENT,
+    replierId varchar(25),
+    replierName varchar(25),
+    reply mediumtext,
+    replyDate datetime not null default current_timestamp,
+    primary key (Rnum),
+    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE
 )
 DEFAULT character set = utf8;
 
