@@ -3,6 +3,7 @@ var app = express();
 var mysql = require('mysql');
 var fs = require('fs');
 var ejs = require('ejs');
+var bodyParser = require('body-parser');
 
 var login1Router = require('./routers/login1');
 var login2Router = require('./routers/login2');
@@ -34,6 +35,7 @@ app.get('/makesubject', function(req, res) {
     res.sendFile(__dirname + '/app/makesubject.html');
 });
 
+app.use(bodyParser.urlencoded({extended:false}));
 app.use('/login1', login1Router);
 app.use('/login2', login2Router);
 app.use('/subjectroom', subjectRoomRouter);
