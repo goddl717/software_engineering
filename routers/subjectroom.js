@@ -11,28 +11,16 @@ var dbConnection = mysql.createConnection({
     // password: 'eorn',
     user: 'sunwoo',
     password: 'Sunwoo123!',
-    database: 'lms'
+    database: 'lms',
+    multipleStatements: true
 });
 
 
 router.get('/', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM board where code ="' + code + '";';
-    console.log(sql);
-    var temp;
 
-    dbConnection.query(sql, function(err, rows, fields) {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log(rows);
-            temp = JSON.stringify(rows);
-            // console.log(temp);
-            res.render('subjectroom', { id: id, code: code, data: rows });
-        }
-    });
-    console.log(temp);
+    res.render('subjectroom', { id: id, code: code });
 });
 
 router.get('/announcement/content', function(req, res) {
@@ -161,14 +149,34 @@ router.get('/QnA/write', function(req, res) {
     });
 });
 
+// router.get('/QnA/content', function(req, res) {
+//     var id = req.query.id;
+//     var code = req.query.code;
+//     var idx = req.query.idx;
+//     var views = req.query.views;
+//     var category = "QnA";
+//     var sql = 'SELECT * FROM board where idx ="' + idx + '";';
+//     console.log(sql);
+
+//     dbConnection.query(sql, function(err, rows, fields) {
+//         if (err) {
+//             console.log(err);
+//         } else {
+//             console.log(rows);
+//             res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+//         }
+//     });
+// });
+
 router.get('/QnA/content', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
     var category = "QnA";
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";';
-    console.log(sql);
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
+              'SELECT name from student where id="' + id + '";' +
+              'SELECT * FROM board_reply where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {

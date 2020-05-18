@@ -29,7 +29,17 @@ var dbConnection = mysql.createConnection({
 router.get('/', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
-    var sql = 'SELECT * FROM board where code ="' + code + '";';
+
+    res.render('subjectroom2', { id: id, code: code });
+});
+
+router.get('/announcement2', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var sql = 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+               FROM board AS B, (SELECT @rownum:=0) N \
+               where code = "' + code + '" AND category = "announcement" \
+               order by ROWNUM desc';
     console.log(sql);
     var temp;
 
@@ -39,8 +49,7 @@ router.get('/', function(req, res) {
         } else {
             console.log(rows);
             temp = JSON.stringify(rows);
-            // console.log(temp);
-            res.render('subjectroom2', { id: id, code: code, data: rows });
+            res.render('announcement2', { id: id, code: code, data: rows });
         }
     });
     console.log(temp);
@@ -211,6 +220,7 @@ router.get('/QnA2', function(req, res) {
     var temp;
 
     dbConnection.query(sql, function(err, rows, fields) {
+
         if (err) {
             console.log(err);
         } else {
@@ -228,8 +238,9 @@ router.get('/QnA2/content2', function(req, res) {
     var idx = req.query.idx;
     var views = req.query.views;
     var category = "QnA";
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";';
-    console.log(sql);
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
+              'SELECT name from professor where id="' + id + '";' +
+              'SELECT * FROM board_reply where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
@@ -240,6 +251,27 @@ router.get('/QnA2/content2', function(req, res) {
         }
     });
 });
+
+// 교수 답변
+router.get('/reply', function(req, res) {   
+    var id = req.query.id;
+    var code = req.query.code;
+    var reply = req.query.reply;
+    var idx = req.query.idx;
+    var name = req.query.name;  // 교수 이름
+
+    var sql = 'INSERT INTO board_reply(idx, replierId, replierName, reply) VALUES(?,?,?,?)';              
+    params = [idx, id, name, reply];
+
+    dbConnection.query(sql, params, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows.insertId);
+            res.redirect('/subjectroom2/QnA2?id=' + id + '&code=' + code);
+        }
+    });
+})
   
 
 module.exports = router;

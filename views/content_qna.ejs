@@ -17,8 +17,16 @@
 
     <body>
         <div>
-            <%=data[0].content%>
-        </div>
+            <%=data[0][0].content%>
+        </div><br>
+        
+        <div>
+            댓글
+        </div><br>
+        
+        <div>
+            답변 : <%=data[2][0].reply%>
+        </div><br>
 
         <form action="/subjectroom/backAnnouncementList" method="get">
             <input type="submit" value="목록">
