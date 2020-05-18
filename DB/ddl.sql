@@ -54,7 +54,10 @@ CREATE TABLE attendace
     primary key (code)
 );
 
--- incomplete..
+-- incomplete
 CREATE TABLE video(
-    code varchar(25)
+    idx int(11) not null AUTO_INCREMENT primary key,
+    code varchar(25),
+    date date,
+    path varchar(255)
 );
