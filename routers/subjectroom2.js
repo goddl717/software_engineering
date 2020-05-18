@@ -20,7 +20,8 @@ var dbConnection = mysql.createConnection({
     // password: 'eorn',
     user: 'sunwoo',
     password: 'Sunwoo123!',
-    database: 'lms'
+    database: 'lms',
+    multipleStatements: true
 });
 
 
