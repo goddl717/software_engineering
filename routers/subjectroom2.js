@@ -260,6 +260,10 @@ router.get('/reply', function(req, res) {
     var idx = req.query.idx;
     var name = req.query.name;  // 교수 이름
 
+    if(reply == null){
+        console.log("There was no reply.");
+    }
+
     var sql = 'INSERT INTO board_reply(idx, replierId, replierName, reply) VALUES(?,?,?,?)';              
     params = [idx, id, name, reply];
 

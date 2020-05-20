@@ -24,9 +24,18 @@
             댓글
         </div><br>
         
-        <div>
-            답변 : <%=data[2][0].reply%>
-        </div><br>
+        <!-- <div>
+            답변 : 
+            <% if (<%=data[2][0].reply%> != null) { %>
+                <%=data[2][0].reply%>
+                <% } %>
+        </div><br> -->
+
+        <% if(<%=data[2][0].reply%> != null) { %>
+            <div>
+                답변 : <%=data[2][0].reply%>
+            </div><br>
+        <% } %>
         
         <div>
             답변 쓰기/수정 : 
@@ -38,7 +47,7 @@
                 <input name="id" type="hidden" value=<%=id%>>
                 <input name="name" type="hidden" value=<%=data[1][0].name%>>
             </form>
-        </div><br>        
+        </div><br>
 
         <form action="/subjectroom2/backAnnouncementList2" method="get">
             <input type="submit" value="목록">
