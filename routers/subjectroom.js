@@ -149,41 +149,28 @@ router.get('/QnA/write', function(req, res) {
     });
 });
 
-// router.get('/QnA/content', function(req, res) {
-//     var id = req.query.id;
-//     var code = req.query.code;
-//     var idx = req.query.idx;
-//     var views = req.query.views;
-//     var category = "QnA";
-//     var sql = 'SELECT * FROM board where idx ="' + idx + '";';
-//     console.log(sql);
-
-//     dbConnection.query(sql, function(err, rows, fields) {
-//         if (err) {
-//             console.log(err);
-//         } else {
-//             console.log(rows);
-//             res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
-//         }
-//     });
-// });
-
 router.get('/QnA/content', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
+    var reply = req.query.reply;    // 답변 유무 (1 or 0)
     var category = "QnA";
     var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
-              'SELECT name from student where id="' + id + '";' +
-              'SELECT * FROM board_reply where idx =' + idx;
+              'SELECT name from professor where id="' + id + '";';
+    if(reply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            console.log(reply);
+            if(reply==1)
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            else
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
         }
     });
 });

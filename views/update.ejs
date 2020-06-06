@@ -14,27 +14,20 @@
 <html>
 
 <head>
+</head>
 
     <body>
-        <div>
-            <%=data[0][0].content%>
-        </div><br>
-        
-        <div>
-            댓글
-        </div><br>
 
-        <form action="/subjectroom/backAnnouncementList" method="get">
-            <input type="submit" value="목록">
-            <input name="idx" type="hidden" value=<%=idx%>>
+        <form action="/subjectroom2/updateProc" method="get">
+            제목 : <input type="text" name="title" value=<%=data[0].title%>><br>
+            내용 : <p><textarea cols="50" rows="10" name="content"><%=data[0].content%>></textarea></p>            
+            <input type="submit" value="저장">
             <input name="code" type="hidden" value=<%=code%>>
             <input name="id" type="hidden" value=<%=id%>>
-            <input name="views" type="hidden" value=<%=views%>>
+            <input name="idx" type="hidden" value=<%=idx%>>
             <input name="category" type="hidden" value=<%=category%>>
         </form>
-
+        
     </body>
-
-</head>
 
 </html>

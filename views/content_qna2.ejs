@@ -23,22 +23,9 @@
         <div>
             댓글
         </div><br>
-        
-        <!-- <div>
-            답변 : 
-            <% if (<%=data[2][0].reply%> != null) { %>
-                <%=data[2][0].reply%>
-                <% } %>
-        </div><br> -->
 
-        <% if(<%=data[2][0].reply%> != null) { %>
-            <div>
-                답변 : <%=data[2][0].reply%>
-            </div><br>
-        <% } %>
-        
         <div>
-            답변 쓰기/수정 : 
+            답변 쓰기 : 
             <form action="/subjectroom2/reply" method="get">
                 <p><textarea cols="100" rows="7" name="reply"></textarea></p>            
                 <input type="submit" value="답변하기">
@@ -46,6 +33,7 @@
                 <input name="code" type="hidden" value=<%=code%>>
                 <input name="id" type="hidden" value=<%=id%>>
                 <input name="name" type="hidden" value=<%=data[1][0].name%>>
+                <input name="update" type="hidden" value=0>
             </form>
         </div><br>
 

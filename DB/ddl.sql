@@ -40,6 +40,8 @@ CREATE TABLE board(
     content mediumtext,
     regdate datetime not null default current_timestamp,
     views int default 1,
+    C_exist boolean default false,
+    R_exist boolean default false,
     primary key (idx)
 )
 DEFAULT character set = utf8;
@@ -63,7 +65,7 @@ CREATE TABLE board_reply(
     Rnum int(11) not null AUTO_INCREMENT,
     replierId varchar(25),
     replierName varchar(25),
-    reply mediumtext,
+    reply mediumtext not null ,
     replyDate datetime not null default current_timestamp,
     primary key (Rnum),
     FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE

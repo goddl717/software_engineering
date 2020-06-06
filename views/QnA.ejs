@@ -38,7 +38,11 @@
                                 <%=data[i].ROWNUM%>
                             </th>
                             <td>
-                                <a href="/subjectroom/QnA/content?id=<%=id%>&code=<%=code%>&idx=<%=data[i].idx%>&views=<%=data[i].views%>">
+                                <a href="/subjectroom/QnA/content?id=<%=id%>
+                                    &code=<%=code%>
+                                    &idx=<%=data[i].idx%>
+                                    &views=<%=data[i].views%>
+                                    &reply=<%=data[i].R_exist%>">
                                     <%=data[i].title%>
                                 </a>
                             </td>

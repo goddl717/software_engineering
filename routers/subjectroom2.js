@@ -237,17 +237,23 @@ router.get('/QnA2/content2', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
+    var reply = req.query.reply;    // 답변 유무 (1 or 0)
     var category = "QnA";
     var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
-              'SELECT name from professor where id="' + id + '";' +
-              'SELECT * FROM board_reply where idx =' + idx;
+              'SELECT name from professor where id="' + id + '";';
+    if(reply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            console.log(reply);
+            if(reply==1)
+                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            else
+                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
         }
     });
 });
@@ -259,12 +265,17 @@ router.get('/reply', function(req, res) {
     var reply = req.query.reply;
     var idx = req.query.idx;
     var name = req.query.name;  // 교수 이름
+    var update = req.query.update;
 
     if(reply == null){
         console.log("There was no reply.");
     }
 
-    var sql = 'INSERT INTO board_reply(idx, replierId, replierName, reply) VALUES(?,?,?,?)';              
+    var sql = 'INSERT INTO board_reply(idx, replierId, replierName, reply) VALUES(?,?,?,?);';
+    if(update==0)
+        sql += 'UPDATE board set R_exist=' + true + ' where idx=' + idx;     // reply 존재한다고 update
+    else    // 답변 수정
+        sql += 'UPDATE board_reply set reply="' + reply + '" where idx=' + idx;
     params = [idx, id, name, reply];
 
     dbConnection.query(sql, params, function(err, rows, fields) {
@@ -276,6 +287,68 @@ router.get('/reply', function(req, res) {
         }
     });
 })
-  
+
+router.get('/delete', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var category = req.query.category;
+
+    var sql = 'delete from board where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            if(category == "announcement"){
+                res.redirect('/subjectroom2/announcement2?id=' + id + '&code=' + code);
+            }else {
+                res.redirect('/subjectroom2/QnA2?id=' + id + '&code=' + code);
+            }
+        }
+    });
+});
+
+router.get('/announcement2/update', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var category = "announcement";
+    var sql = 'SELECT content, title from board where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('update', { category: category, idx: idx, id: id, code: code, data: rows });
+        }
+    });
+});
+
+router.get('/updateProc', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var category = req.query.category;
+    var content = req.query.content;
+    var title = req.query.title;
+
+    var sql = 'update board set content="' + content + '",title="' + title + '" where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            if(category == "announcement"){
+                res.redirect('/subjectroom2/announcement2?id=' + id + '&code=' + code);
+            }else {
+                res.redirect('/subjectroom2/QnA2?id=' + id + '&code=' + code);
+            }
+        }
+    });
+});
 
 module.exports = router;

@@ -17,33 +17,28 @@
 
     <body>
         <div>
-            <%=data[0].content%>
+            <%=data[0][0].content%>
+        </div><br>
+        
+        <div>
+            댓글
+        </div><br>
+        
+        <div>
+            답변 : <%=data[2][0].reply%>
         </div><br>
 
-        <form action="/subjectroom2/backAnnouncementList2" method="get">
+        <form action="/subjectroom/backAnnouncementList" method="get">
             <input type="submit" value="목록">
             <input name="idx" type="hidden" value=<%=idx%>>
             <input name="code" type="hidden" value=<%=code%>>
             <input name="id" type="hidden" value=<%=id%>>
             <input name="views" type="hidden" value=<%=views%>>
             <input name="category" type="hidden" value=<%=category%>>
-        </form><br>
-
-        <form action="/subjectroom2/announcement2/update" method="get">
-            <input type="submit" value="글 수정">
-            <input name="idx" type="hidden" value=<%=idx%>>
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-        </form><br>
-
-        <form action="/subjectroom2/delete" method="get">
-            <input type="submit" value="글 삭제">
-            <input name="idx" type="hidden" value=<%=idx%>>
-            <input name="category" type="hidden" value=<%=category%>>
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
         </form>
 
     </body>
+
+</head>
 
 </html>
