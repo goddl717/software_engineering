@@ -157,7 +157,7 @@ router.get('/QnA/content', function(req, res) {
     var reply = req.query.reply;    // 답변 유무 (1 or 0)
     var category = "QnA";
     var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
-              'SELECT name from professor where id="' + id + '";';
+              'SELECT name from student where id="' + id + '";';
     if(reply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx;
 
@@ -175,9 +175,36 @@ router.get('/QnA/content', function(req, res) {
     });
 });
 
-// router.get('/writeProc', function(req, res) {
-//     // subjectroom2.js 에 있음
-// })
+router.get('/comment', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var views = req.query.views;
+    var reply = req.query.reply;
+    var commenterName = req.query.name;
+    var category = "QnA";
+    var comments = req.query.comments;
+    
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
+              'SELECT name from student where id="' + id + '";';
+    if(reply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
 
+    sql += 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
+    params = [idx, id, commenterName, comments];
+
+    dbConnection.query(sql, params, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            console.log(reply);
+            if(reply==1)
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            else
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+        }
+    });
+});
 
 module.exports = router;
