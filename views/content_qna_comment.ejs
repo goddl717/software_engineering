@@ -26,7 +26,7 @@
             <%=data[0][0].content%>
         </div><br>
 
-        <div class="container">
+        <!-- <div class="container">
             <div class="row">
                 <div class="col-md-8">
                   <div class="page-header">
@@ -42,7 +42,13 @@
                             <div class="media-body">
                                 
                               <h4 class="media-heading user_name">Baltej Singh</h4>
-                                Comment sss
+                                <% for(var i = 0 ; i < data[2].C_exist ; i++){%>
+                                    <tr>
+                                        <th>
+                                            <%=data[2][i].comment%>
+                                        </th>
+                                    </tr>
+                                <% }%>
                               
                               <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
                             </div>
@@ -51,7 +57,15 @@
                    </div>
                 </div>
             </div>
-        </div>
+        </div> -->
+        댓글<br>
+        <% for(var i = 0 ; i < data[2].C_exist ; i++){%>
+            <tr>
+                <th>
+                    <%=data[2][i].comment%>
+                </th>
+            </tr>
+        <% }%>
 
         <form action="/subjectroom/comment" method="get">
             <p><textarea cols="100" rows="4" name="comments"></textarea></p>            

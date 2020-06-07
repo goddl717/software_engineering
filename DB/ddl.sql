@@ -40,7 +40,7 @@ CREATE TABLE board(
     content mediumtext,
     regdate datetime not null default current_timestamp,
     views int default 1,
-    C_exist boolean default false,
+    C_exist int default 0,
     R_exist boolean default false,
     primary key (idx)
 )
@@ -55,7 +55,7 @@ CREATE TABLE board_comments(
     comments varchar(50),
     commentsDate datetime not null default current_timestamp,
     primary key (Cnum),
-    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE
+    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE ON DELETE CASCADE
 )
 DEFAULT character set = utf8;
 
@@ -68,7 +68,7 @@ CREATE TABLE board_reply(
     reply mediumtext not null ,
     replyDate datetime not null default current_timestamp,
     primary key (Rnum),
-    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE
+    FOREIGN KEY (idx) REFERENCES board(idx) ON UPDATE CASCADE ON DELETE CASCADE
 )
 DEFAULT character set = utf8;
 

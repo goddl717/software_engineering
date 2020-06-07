@@ -154,12 +154,15 @@ router.get('/QnA/content', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
-    var reply = req.query.reply;    // 답변 유무 (1 or 0)
+    var reply = req.query.reply;            // 답변 유무 (1 or 0)
+    var comment = req.query.existComment;   // 댓글 유무 (1 or 0)
     var category = "QnA";
     var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
               'SELECT name from student where id="' + id + '";';
     if(reply==1)
-        sql += 'SELECT * FROM board_reply where idx =' + idx;
+        sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
+    if(comment==1)
+        sql += 'SELECT * FROM board_comments where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
@@ -180,15 +183,24 @@ router.get('/comment', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
-    var reply = req.query.reply;
     var commenterName = req.query.name;
     var category = "QnA";
     var comments = req.query.comments;
+    var existReply = req.query.existReply;
+    var existComment = req.query.existComment;  // 숫자형으로 변환
+    existComment = parseInt(existComment);
+    console.log("댓글수 : " + existComment);
     
     var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
               'SELECT name from student where id="' + id + '";';
-    if(reply==1)
+    if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
+    if(existComment>0)
+        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';
+
+    // 댓글수 하나 추가
+    existComment += 1;
+    sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';
 
     sql += 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
     params = [idx, id, commenterName, comments];
@@ -198,11 +210,19 @@ router.get('/comment', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            console.log(reply);
-            if(reply==1)
+            if(existReply==1 && existComment==0){
+                console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
-            else
+            }else if (existReply==0 && existComment>0){
+                console.log(2);
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==1 && existComment>0){
+                console.log(3);
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else{
+                console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }    
         }
     });
 });

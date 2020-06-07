@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+<!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+<html>
+
+<head>
+
+    <body>
+        <div>
+            <%=data[0][0].content%>
+        </div><br>
+        
+        <div>
+            댓글
+        </div><br>
+        
+        <div>
+            답변 : <%=data[2][0].reply%>
+        </div><br>
+
+        <form action="/subjectroom/backAnnouncementList" method="get">
+            <input type="submit" value="목록">
+            <input name="idx" type="hidden" value=<%=idx%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+            <input name="views" type="hidden" value=<%=views%>>
+            <input name="category" type="hidden" value=<%=category%>>
+        </form>
+
+    </body>
+
+</head>
+
+</html>

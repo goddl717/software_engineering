@@ -335,7 +335,7 @@ router.get('/updateProc', function(req, res) {
     var content = req.query.content;
     var title = req.query.title;
 
-    var sql = 'update board set content="' + content + '",title="' + title + '" where idx =' + idx;
+    var sql = 'UPDATE board SET content="' + content + '",title="' + title + '" where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
