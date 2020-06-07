@@ -20,12 +20,48 @@
             <%=data[0][0].content%>
         </div><br>
         
-        <div>
-            댓글
-        </div><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right">45 comments</small> Comments </h1>
+                  </div> 
+                   <div class="comments-list">
+
+                        <div class="media">
+                           <p class="pull-right"><small>5 days ago</small></p>
+                            <a class="media-left" href="#">
+                              <img src="http://lorempixel.com/40/40/people/1/">
+                            </a>
+                            <div class="media-body">
+                                
+                              <h4 class="media-heading user_name">Baltej Singh</h4>
+                                Comment
+                              
+                              <p><small><a href="">Like</a> - <a href="">Share</a></small></p>
+                            </div>
+                        </div>
+                        
+                   </div>
+                </div>
+            </div>
+        </div>
+
+        <form action="/subjectroom/comment" method="get">
+            <p><textarea cols="100" rows="4" name="comments"></textarea></p>            
+            <input type="submit" value="댓글 쓰기">
+            <input name="name" type="hidden" value=<%=data[3][0].name%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+            <input name="category" type="hidden" value=<%=category%>>
+            <input name="idx" type="hidden" value=<%=idx%>>
+            <input name="views" type="hidden" value=<%=views%>>
+            <input name="existComment" type="hidden" value=<%=data[2][0].C_exist%>>
+            <input name="existReply" type="hidden" value=<%=data[2][0].R_exist%>>
+        </form><br><br>
         
         <div>
-            답변 : <%=data[2][0].reply%>
+            답변 : <%=data[4][0].reply%>
         </div><br>
 
         <form action="/subjectroom/backAnnouncementList" method="get">

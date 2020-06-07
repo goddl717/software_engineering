@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-
 var multer = require('multer');
 var upload = multer({ dest: "/videos" });
+var moment = require('moment');
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
@@ -14,7 +14,6 @@ var dbConnection = mysql.createConnection({
     database: 'lms',
     multipleStatements: true
 });
-
 
 router.get('/', function(req, res) {
     var id = req.query.id;
@@ -154,14 +153,16 @@ router.get('/QnA/content', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
-    var reply = req.query.reply;            // 답변 유무 (1 or 0)
-    var comment = req.query.existComment;   // 댓글 유무 (1 or 0)
+    var existReply = req.query.reply;                      // 답변 유무 (1 or 0)
+    var existComment = parseInt(req.query.existComment);   // 댓글 개수
     var category = "QnA";
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +     // comment 때문에 packet index 뒤로 하나 보낼려고
+              'SELECT * FROM board where idx ="' + idx + '";' +     //
+              'SELECT * FROM board where idx ="' + idx + '";' +
               'SELECT name from student where id="' + id + '";';
-    if(reply==1)
+    if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
-    if(comment==1)
+    if(existComment>0)
         sql += 'SELECT * FROM board_comments where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
@@ -169,11 +170,19 @@ router.get('/QnA/content', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            console.log(reply);
-            if(reply==1)
+            if(existReply==1 && existComment==0){
+                console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
-            else
+            }else if (existReply==0 && existComment>0){
+                console.log(2);
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==1 && existComment>0){
+                console.log(3);
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else{
+                console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }  
         }
     });
 });
@@ -187,23 +196,18 @@ router.get('/comment', function(req, res) {
     var category = "QnA";
     var comments = req.query.comments;
     var existReply = req.query.existReply;
-    var existComment = req.query.existComment;  // 숫자형으로 변환
-    existComment = parseInt(existComment);
-    console.log("댓글수 : " + existComment);
-    
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
-              'SELECT name from student where id="' + id + '";';
+    var existComment = req.query.existComment;  
+    existComment = parseInt(existComment) + 1;  // 댓글 하나 추가    
+
+    var sql = 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
+    params = [idx, id, commenterName, comments];
+        sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';    
+        sql += 'SELECT * FROM board where idx ="' + idx + '";' +   
+               'SELECT name from student where id="' + id + '";';
     if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
     if(existComment>0)
-        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';
-
-    // 댓글수 하나 추가
-    existComment += 1;
-    sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';
-
-    sql += 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
-    params = [idx, id, commenterName, comments];
+        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';    
 
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
@@ -214,8 +218,8 @@ router.get('/comment', function(req, res) {
                 console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
             }else if (existReply==0 && existComment>0){
-                console.log(2);
-                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                console.log(2);   
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, time: time, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
                 res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
