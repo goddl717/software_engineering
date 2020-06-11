@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>LMS - Facebook 계정 연동</title>
+<script type="text/javascript">
+    var appKey = "231422474599070";    
+    var url = "http://www.facebook.com/dialog/oauth?client_id=" + appKey + "&redirect_uri=http://localhost:8888/app/connectsns.html&scope=publish_stream,offline_access";
+    function go() {
+        window.location.href = url;
+    }
+</script>
+</head>
+<body>
+<a href="#" onclick="go();">페이스북 OAuth 인증 시작 하기</a>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<html>
+ <head>
+     <title>LMS - 로그인 구분</title>
+ </head>
+ <body>
+    <h1>학습관리시스템 사용자 선택</h1>
+    <button id="btn_sugang" onclick='sugang()'>학생로그인</button><br>
+    <button id="btn_goto" onclick='goto()'>교수로그인</button>
+ </body>
+</html>
+
+<script type="text/javascript" language="javascript">
+    function sugang() {
+        location.href = 'login1';
+    }
+
+    function goto() {
+        location.href = 'login2';
+    }
+</script>
