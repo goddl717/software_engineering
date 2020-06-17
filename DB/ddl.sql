@@ -49,6 +49,8 @@ CREATE TABLE board(
 )
 DEFAULT character set = utf8;
 
+--확인.
+
 -- 댓글
 CREATE TABLE board_comments(
     idx int(11) not null,
