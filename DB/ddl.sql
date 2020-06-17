@@ -19,8 +19,11 @@ CREATE TABLE professor
 CREATE TABLE subject
 (
     id varchar(25),
-    name varchar(25)
-    primary key (id)
+    name varchar(25),
+    x double,
+    y double, 
+    randomnum varchar(25),
+    pid varchar(25)
 );
 
 CREATE TABLE sugang
@@ -72,11 +75,11 @@ CREATE TABLE board_reply(
 )
 DEFAULT character set = utf8;
 
-CREATE TABLE attendace
+CREATE TABLE attendance
 (
     code varchar(25),
     sid varchar(25),
-    date date
+    date date,
     primary key (code)
 );
 
