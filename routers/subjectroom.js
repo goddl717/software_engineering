@@ -3,7 +3,6 @@ var router = express.Router();
 var mysql = require('mysql');
 var multer = require('multer');
 var upload = multer({ dest: "/videos" });
-var moment = require('moment');
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
@@ -197,7 +196,7 @@ router.get('/comment', function(req, res) {
     var comments = req.query.comments;
     var existReply = req.query.existReply;
     var existComment = req.query.existComment;  
-    existComment = parseInt(existComment) + 1;  // 댓글 하나 추가    
+    existComment = parseInt(existComment) + 1;  // 댓글 하나 추가
 
     var sql = 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
     params = [idx, id, commenterName, comments];
@@ -219,7 +218,7 @@ router.get('/comment', function(req, res) {
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);   
-                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, time: time, data: rows });
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
                 res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
