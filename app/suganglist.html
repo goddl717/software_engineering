@@ -12,17 +12,11 @@
 
 
 <html>
-sugang 가능한 목록.
-
-<div id="list">
-
-
-</div>
-
-
+    <head>
+        <title>LMS - 수강 신청 가능한 강의</title>
+    </head>
+<div id="list"></div>
 </html>
-
-
 
 <script type="text/javascript" language="javascript">
     $(document).ready(function() {
@@ -39,15 +33,10 @@ sugang 가능한 목록.
                 // var temp = JSON.stringify(data);
                 for (var i = 0; i < data.length; i++) {
                     //alert(data[i].name);
-
                     //document.write(data[i].name);
-
                     document.getElementById("list").innerHTML += data[i].name;
                     document.getElementById("list").innerHTML += "<button onclick = enroll('" + data[i].id + "')>신청하기</button><br>";
-
                 }
-
-
             }
         });
     });
