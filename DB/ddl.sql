@@ -3,7 +3,7 @@ CREATE TABLE student
     id varchar(25),
     password varchar(25),
     name varchar(25),
-    major varchar(25)
+    major varchar(25),
     primary key (id)
 );
 
@@ -12,7 +12,7 @@ CREATE TABLE professor
     id varchar(25),
     password varchar(25),
     name varchar(25),
-    major varchar(25)
+    major varchar(25),
     primary key (id)
 );
 
@@ -29,7 +29,7 @@ CREATE TABLE subject
 CREATE TABLE sugang
 (
     id varchar(25),
-    stu varchar(25)
+    stu varchar(25),
     primary key (id)
 );
 
@@ -48,8 +48,6 @@ CREATE TABLE board(
     primary key (idx)
 )
 DEFAULT character set = utf8;
-
---확인.
 
 -- 댓글
 CREATE TABLE board_comments(
