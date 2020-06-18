@@ -12,12 +12,13 @@
 
 
 <html>
-    <head>
-        <title>LMS - 개설한 강의</title>
-    </head>
-<div id="main"></div>
-</html>
+내가 개설한 강의실 목록.
+<div id="main">
 
+
+</div>
+
+</html>
 <script>
     function getParams() {
         // 파라미터가 담길 배열
@@ -69,6 +70,7 @@
                     temp.innerHTML += data[i].id;
                     temp.innerHTML += data[i].name;
                     temp.innerHTML += "<button onclick =enter('" + data[i].id + "')>출석하기</button>";
+                    temp.innerHTML += "<button onclick = enterroom('" + data[i].id + "')>강의실 입장</button>";
                     temp.innerHTML += "<br>";
 
                 }
@@ -112,5 +114,12 @@
         var temp = getParams();
         var id = temp["id"];
         location.href = "/lectureroom2?id=" + id + "&code=" + code;
+    }
+
+    function enterroom(code) {
+        var temp = getParams();
+        var id = temp["id"];
+        location.href = "/subjectroom2?id=" + id + "&code=" + code;
+
     }
 </script>

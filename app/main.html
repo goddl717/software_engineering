@@ -13,14 +13,14 @@
 
 
 <html>
-    <head>
-        <title>LMS - 메인 (학생)</title>
-    </head>
-<br><div id="info"></div>
-<br><button id="btn_sugang" onclick='sugang()'>수강 신청</button>
-<br><button id="btn_goto" onclick='goto()'>강의실 입장</button>
-<br><button id="btn_sns" onclick='connectsns()' >Facebook 계정 연동</button>
+메인 화면 <br>
+<div id="info"></div>
+<br>
+<button id="btn_sugang" onclick='sugang()'>수강 신청하기.</button><br>
+<button id="btn_goto" onclick='goto()'>강의실 입장하기.</button><br>
+
 </html>
+
 
 <script>
     function getParams() {
@@ -60,15 +60,12 @@
     function sugang() {
         var temp = getParams();
         location.href = '/suganglist?id=' + temp.id;
+
     }
 
     function goto() {
         var temp = getParams();
         location.href = '/myroom?id=' + temp.id;
-    }
 
-    function connectsns() {
-        var temp = getParams();
-        location.href = '/connectsns?id=' + temp.id;
     }
 </script>

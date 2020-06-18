@@ -12,50 +12,11 @@
 
 
 <html>
-    <head>
-        <title>LMS - 출석 시작</title>
-        <style>
-            #map {
-                height: 400px;
-                width: 50%;
-            }
-        </style>
-    </head>
-    <body>
-        <h1 id="random"></h1>
-        <button id="start" onclick="start()"> 랜덤 번호 생성하기.</button>
-        <button id="start" onclick="finish()"> 출석 종료.</button>
-        <br> <br> 강의실 위치 변경하기 <br>
-        <div id="map"></div>
-        <script>
-            function initMap() {
-                var standard_pos = {lat: 35.890045, lng: 128.611333}
-                var map = new google.maps.Map(document.getElementById('map'), {zoom:18, center: standard_pos});
-                var marker = new google.maps.Marker({position: standard_pos, map: map});
-                map.addListener('click', function(e) {
-                    var clicked_pos = {lat: e.latLng.lat(), lng: e.latLng.lng()};
-                    marker.setPosition(clicked_pos);
-                    var lat_t = document.getElementById("lat");
-                    lat_t.value = e.latLng.lat();
-                    var lng_t = document.getElementById("lng");
-                    lng_t.value = e.latLng.lng();
-                    var code_t = document.getElementById("code");
-                    code_t.value = getParams()["code"];
-                    var pid_t = document.getElementById("pid");
-                    pid_t.value = getParams()["id"];
-                })
-            }
-        </script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIW_FzauXyIHC8hL5b8FQBOcnQ85khrQ4&callback=initMap"></script>
-        <form method="get" action="/updatelocationproc">
-            <br> 위도 : <input id="lat" name="lat_input" type="text" readonly />
-            <br> 경도 : <input id="lng" name="lng_input" type="text" readonly />
-            <input id="code" name="code_input" type="hidden"/>
-            <input id="pid" name="pid_input" type="hidden"/>
-            <br> <br> <input type="submit" value="변경">
-        </form>
-    </body>
-
+출석시작하기 페이지.
+<h1 id="random"></h1>
+<button id="start" onclick="start()"> 랜덤 번호 생성하기.</button>
+<button id="show" onclick= "show_()"> 출석 현황.</button>
+<button id="start" onclick="finish()"> 출석 종료.</button>
 
 
 <!--
@@ -81,6 +42,40 @@
 -->
 
 </html>
+
+<script>
+function show_() {
+        $(document).ready(function() {
+            var temp = getParams();
+            var code = temp["code"];
+
+            $.ajax({
+                type: "GET", 
+                url: "/attendance_status", 
+                data: {
+                    code: code
+                },
+                dataType: "json", 
+                error: function() {
+                    alert("통신실패!!!!");
+                },
+                success: function(data) {
+                    alert("출석현황");
+                    var popup = window.open("","Attendance", "top = 100, left = 100, width = 500 ,height = 100, scrollbars=yes, resizable=yes");
+                    var date = data[0]["date"].split("T");
+                    popup.document.write(`[오늘 날짜] : ${date[0]}<br>`);
+                    popup.document.write(`[학생 ID:]<br>`);
+                    for(var i=0; i<data.length;i++)
+                    {
+                        var id = data[i]["sid"];
+                        popup.document.write(`${id}]<br>`);
+                        
+                    }
+                }
+            })
+        });
+    }
+</script>
 
 <script>
     function getParams() {
