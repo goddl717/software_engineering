@@ -20,12 +20,33 @@
             <%=data[0][0].content%>
         </div><br>
         
-        <div>
-            댓글
-        </div><br>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right"></small> Comments </h1>
+                  </div> 
+                   <div class="comments-list">
+                   </div>
+                </div>
+            </div>
+        </div><br><br>
+
+        <form action="/subjectroom2/comment2" method="get">
+            <p><textarea cols="100" rows="4" name="comments"></textarea></p>            
+            <input type="submit" value="댓글 쓰기">
+            <input name="name" type="hidden" value=<%=data[3][0].name%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+            <input name="category" type="hidden" value=<%=category%>>
+            <input name="idx" type="hidden" value=<%=idx%>>
+            <input name="views" type="hidden" value=<%=views%>>
+            <input name="existComment" type="hidden" value=<%=data[2][0].C_exist%>>
+            <input name="existReply" type="hidden" value=<%=data[2][0].R_exist%>>
+        </form><br>
         
         <div>
-            답변 : <%=data[2][0].reply%>
+            답변 : <%=data[4][0].reply%>
         </div><br>
 
         <div>

@@ -237,23 +237,80 @@ router.get('/QnA2/content2', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
-    var reply = req.query.reply;    // 답변 유무 (1 or 0)
+    var existReply = req.query.reply;                      // 답변 유무 (1 or 0)
+    var existComment = parseInt(req.query.existComment);   // 댓글 개수
     var category = "QnA";
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +   
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +     // comment 때문에 packet index 뒤로 하나 보낼려고
+              'SELECT * FROM board where idx ="' + idx + '";' +     //
+              'SELECT * FROM board where idx ="' + idx + '";' +
               'SELECT name from professor where id="' + id + '";';
-    if(reply==1)
-        sql += 'SELECT * FROM board_reply where idx =' + idx;
+    if(existReply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
+    if(existComment>0)
+        sql += 'SELECT * FROM board_comments where idx =' + idx;
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
             console.log(err);
         } else {
             console.log(rows);
-            console.log(reply);
-            if(reply==1)
+            if(existReply==1 && existComment==0){
+                console.log(1);
                 res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
-            else
+            }else if (existReply==0 && existComment>0){
+                console.log(2);
+                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==1 && existComment>0){
+                console.log(3);
+                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else{
+                console.log(4);
                 res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }  
+        }
+    });
+});
+
+router.get('/comment2', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var views = req.query.views;
+    var commenterName = req.query.name;
+    var category = "QnA";
+    var comments = req.query.comments;
+    var existReply = req.query.existReply;
+    var existComment = req.query.existComment;  
+    existComment = parseInt(existComment) + 1;  // 댓글 하나 추가
+
+    var sql = 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
+    params = [idx, id, commenterName, comments];
+        sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';    
+        sql += 'SELECT * FROM board where idx ="' + idx + '";' +   
+               'SELECT name from professor where id="' + id + '";';
+    if(existReply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
+    if(existComment>0)
+        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';    
+
+    dbConnection.query(sql, params, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            if(existReply==1 && existComment==0){
+                console.log(1);
+                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==0 && existComment>0){
+                console.log(2);   
+                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==1 && existComment>0){
+                console.log(3);
+                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else{
+                console.log(4);
+                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }    
         }
     });
 });
