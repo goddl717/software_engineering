@@ -58,7 +58,16 @@
         
         <div>
             답변 : <%=data[4][0].reply%>
-        </div><br>
+        </div><br><br>
+
+        <% if (data[2][0].name == data[3][0].name) {%>
+            <form action="/subjectroom/delete" method="get">
+                <input type="submit" value="글 삭제">
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+            </form><br>
+        <% } %>
 
         <form action="/subjectroom/backAnnouncementList" method="get">
             <input type="submit" value="목록">

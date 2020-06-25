@@ -190,6 +190,7 @@ router.get('/comment', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
+    
     var views = req.query.views;
     var commenterName = req.query.name;
     var category = "QnA";
@@ -226,6 +227,24 @@ router.get('/comment', function(req, res) {
                 console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
             }    
+        }
+    });
+});
+
+// 질문 삭제
+router.get('/delete', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+
+    var sql = 'delete from board where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.redirect('/subjectroom/QnA?id=' + id + '&code=' + code);
         }
     });
 });

@@ -28,9 +28,8 @@ CREATE TABLE subject
 
 CREATE TABLE sugang
 (
-    id varchar(25),
-    stu varchar(25),
-    primary key (id)
+    id varchar(25),     -- subject id
+    stu varchar(25)     -- student id
 );
 
 CREATE TABLE board(
