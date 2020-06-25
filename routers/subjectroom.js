@@ -249,4 +249,88 @@ router.get('/delete', function(req, res) {
     });
 });
 
+// 댓글 삭제
+router.get('/deleteComment', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    
+    var views = req.query.views;
+    var commenterName = req.query.name;
+    var category = "QnA";
+    var comments = req.query.comments;
+    var existReply = req.query.existReply;
+    var existComment = req.query.existComment;  
+    existComment = parseInt(existComment) - 1;  // 댓글 하나 삭제
+    var Cnum = req.query.Cnum;
+
+    var sql = 'DELETE FROM board_comments where Cnum = ' + Cnum + ';';
+    params = [idx, id, commenterName, comments];
+        sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';    
+        sql += 'SELECT * FROM board where idx ="' + idx + '";' +   
+               'SELECT name from student where id="' + id + '";';
+    if(existReply==1)
+        sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
+    if(existComment>0)
+        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';    
+
+    dbConnection.query(sql, params, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            if(existReply==1 && existComment==0){
+                console.log(1);
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==0 && existComment>0){
+                console.log(2);   
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else if (existReply==1 && existComment>0){
+                console.log(3);
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }else{
+                console.log(4);
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+            }    
+        }
+    });
+});
+
+// 질문 글 수정
+router.get('/update', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var category = "QnA";
+    var sql = 'SELECT content, title from board where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.render('update', { category: category, idx: idx, id: id, code: code, data: rows });
+        }
+    });
+});
+
+router.get('/updateProc', function(req, res) {
+    var id = req.query.id;
+    var code = req.query.code;
+    var idx = req.query.idx;
+    var content = req.query.content;
+    var title = req.query.title;
+
+    var sql = 'UPDATE board SET content="' + content + '",title="' + title + '" where idx =' + idx;
+
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.redirect('/subjectroom/QnA?id=' + id + '&code=' + code);
+        }
+    });
+});
+
 module.exports = router;

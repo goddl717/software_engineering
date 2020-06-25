@@ -43,6 +43,20 @@
                               <h4 class="media-heading user_name"><%=data[4][i].commenterName%></h4>
                                     <%=data[4][i].comments%>
                             </div>
+                            <% if (data[3][0].name == data[4][i].commenterName) {%>
+                                <form action="/subjectroom/deleteComment" method="get">
+                                    <input type="submit" value="댓글 삭제">
+                                    <input name="name" type="hidden" value=<%=data[3][0].name%>>
+                                    <input name="code" type="hidden" value=<%=code%>>
+                                    <input name="id" type="hidden" value=<%=id%>>
+                                    <input name="category" type="hidden" value=<%=category%>>
+                                    <input name="idx" type="hidden" value=<%=idx%>>
+                                    <input name="views" type="hidden" value=<%=views%>>
+                                    <input name="existComment" type="hidden" value=<%=data[2][0].C_exist%>>
+                                    <input name="existReply" type="hidden" value=<%=data[2][0].R_exist%>>
+                                    <input name="Cnum" type="hidden" value=<%=data[4][i].Cnum%>>
+                                </form>
+                            <% } %>
                         </div>
                     <% }%>                   
                         
@@ -67,6 +81,15 @@
         <% if (data[2][0].name == data[3][0].name) {%>
             <form action="/subjectroom/delete" method="get">
                 <input type="submit" value="글 삭제">
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+            </form><br>
+        <% } %>
+
+        <% if (data[2][0].name == data[3][0].name) {%>
+            <form action="/subjectroom/update" method="get">
+                <input type="submit" value="글 수정">
                 <input name="idx" type="hidden" value=<%=idx%>>
                 <input name="code" type="hidden" value=<%=code%>>
                 <input name="id" type="hidden" value=<%=id%>>

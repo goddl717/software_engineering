@@ -18,15 +18,27 @@
 
     <body>
 
-        <form action="/subjectroom2/updateProc" method="get">
-            제목 : <input type="text" name="title" value=<%=data[0].title%>><br>
-            내용 : <p><textarea cols="50" rows="10" name="content"><%=data[0].content%>></textarea></p>            
-            <input type="submit" value="저장">
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-            <input name="idx" type="hidden" value=<%=idx%>>
-            <input name="category" type="hidden" value=<%=category%>>
-        </form>
+        <% if (category == "announcement") {%>
+            <form action="/subjectroom2/updateProc" method="get">
+                제목 : <input type="text" name="title" value=<%=data[0].title%>><br>
+                내용 : <p><textarea cols="50" rows="10" name="content"><%=data[0].content%>></textarea></p>            
+                <input type="submit" value="저장">
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="category" type="hidden" value=<%=category%>>
+            </form>
+        <% } else { %>
+            <form action="/subjectroom/updateProc" method="get">
+                제목 : <input type="text" name="title" value="<%=data[0].title%>"><br>
+                내용 : <p><textarea cols="50" rows="10" name="content"><%=data[0].content%>></textarea></p>            
+                <input type="submit" value="저장">
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="category" type="hidden" value=<%=category%>>
+            </form>
+        <% } %>
         
     </body>
 
