@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var fs = require('fs');
+var moment = require('moment');
 
 //multer
 var multer = require('multer');
@@ -49,7 +50,7 @@ router.get('/announcement2', function(req, res) {
         } else {
             console.log(rows);
             temp = JSON.stringify(rows);
-            res.render('announcement2', { id: id, code: code, data: rows });
+            res.render('announcement2', { id: id, code: code, moment: moment, data: rows });
         }
     });
     console.log(temp);
@@ -226,7 +227,7 @@ router.get('/QnA2', function(req, res) {
         } else {
             console.log(rows);
             temp = JSON.stringify(rows);
-            res.render('QnA2', { id: id, code: code, data: rows });
+            res.render('QnA2', { id: id, code: code, moment: moment, data: rows });
         }
     });
     console.log(temp);
@@ -256,16 +257,16 @@ router.get('/QnA2/content2', function(req, res) {
             console.log(rows);
             if(existReply==1 && existComment==0){
                 console.log(1);
-                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);
-                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
-                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else{
                 console.log(4);
-                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }  
         }
     });
@@ -300,16 +301,16 @@ router.get('/comment2', function(req, res) {
             console.log(rows);
             if(existReply==1 && existComment==0){
                 console.log(1);
-                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);   
-                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
-                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else{
                 console.log(4);
-                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna2', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }    
         }
     });

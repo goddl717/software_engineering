@@ -51,7 +51,7 @@
                                 <%=data[i].name%>
                             </td>
                             <td>
-                                <%=data[i].regdate%>
+                                <%= moment(data[i].regdate).fromNow() %>
                             </td>
                             <td>
                                 <%=data[i].views%>

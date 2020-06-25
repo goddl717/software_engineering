@@ -3,6 +3,7 @@ var router = express.Router();
 var mysql = require('mysql');
 var multer = require('multer');
 var upload = multer({ dest: "/videos" });
+var moment = require('moment');     // 날짜 모듈
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
@@ -103,7 +104,7 @@ router.get('/announcement', function(req, res) {
         } else {
             console.log(rows);
             temp = JSON.stringify(rows);
-            res.render('announcement', { id: id, code: code, data: rows });
+            res.render('announcement', { id: id, code: code, moment: moment, data: rows });
         }
     });
     console.log(temp);
@@ -125,7 +126,7 @@ router.get('/QnA', function(req, res) {
         } else {
             console.log(rows);
             temp = JSON.stringify(rows);
-            res.render('QnA', { id: id, code: code, data: rows });
+            res.render('QnA', { id: id, code: code, moment: moment, data: rows });
         }
     });
     console.log(temp);
@@ -171,16 +172,16 @@ router.get('/QnA/content', function(req, res) {
             console.log(rows);
             if(existReply==1 && existComment==0){
                 console.log(1);
-                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);
-                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
-                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else{
                 console.log(4);
-                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }  
         }
     });
@@ -216,16 +217,16 @@ router.get('/comment', function(req, res) {
             console.log(rows);
             if(existReply==1 && existComment==0){
                 console.log(1);
-                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);   
-                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
-                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else{
                 console.log(4);
-                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }    
         }
     });
@@ -281,16 +282,16 @@ router.get('/deleteComment', function(req, res) {
             console.log(rows);
             if(existReply==1 && existComment==0){
                 console.log(1);
-                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==0 && existComment>0){
                 console.log(2);   
-                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else if (existReply==1 && existComment>0){
                 console.log(3);
-                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }else{
                 console.log(4);
-                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, data: rows });
+                res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
             }    
         }
     });
