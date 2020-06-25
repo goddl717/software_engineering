@@ -20,15 +20,6 @@
             <%=data[0].content%>
         </div><br>
 
-        <form action="/subjectroom2/backAnnouncementList2" method="get">
-            <input type="submit" value="목록">
-            <input name="idx" type="hidden" value=<%=idx%>>
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-            <input name="views" type="hidden" value=<%=views%>>
-            <input name="category" type="hidden" value=<%=category%>>
-        </form><br>
-
         <form action="/subjectroom2/announcement2/update" method="get">
             <input type="submit" value="글 수정">
             <input name="idx" type="hidden" value=<%=idx%>>
@@ -42,7 +33,16 @@
             <input name="category" type="hidden" value=<%=category%>>
             <input name="code" type="hidden" value=<%=code%>>
             <input name="id" type="hidden" value=<%=id%>>
-        </form>
+        </form><br><br>
+
+        <form action="/subjectroom2/backAnnouncementList2" method="get">
+            <input type="submit" value="목록">
+            <input name="idx" type="hidden" value=<%=idx%>>
+            <input name="code" type="hidden" value=<%=code%>>
+            <input name="id" type="hidden" value=<%=id%>>
+            <input name="views" type="hidden" value=<%=views%>>
+            <input name="category" type="hidden" value=<%=category%>>
+        </form><br>
 
     </body>
 
