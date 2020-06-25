@@ -163,7 +163,10 @@ router.get('/QnA/content', function(req, res) {
     if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
     if(existComment>0)
-        sql += 'SELECT * FROM board_comments where idx =' + idx;
+        sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+                FROM board_comments AS B, (SELECT @rownum:=0) N \
+                where idx = ' + idx + ' \
+                order by ROWNUM desc;';
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
@@ -208,7 +211,10 @@ router.get('/comment', function(req, res) {
     if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
     if(existComment>0)
-        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';    
+        sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+                FROM board_comments AS B, (SELECT @rownum:=0) N \
+                where idx = ' + idx + ' \
+                order by ROWNUM desc;';
 
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
@@ -273,7 +279,11 @@ router.get('/deleteComment', function(req, res) {
     if(existReply==1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
     if(existComment>0)
-        sql += 'SELECT * FROM board_comments where idx =' + idx + ';';    
+        sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
+                FROM board_comments AS B, (SELECT @rownum:=0) N \
+                where idx = ' + idx + ' \
+                order by ROWNUM desc;';
+
 
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
