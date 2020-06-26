@@ -27,13 +27,25 @@ insert into subject(id,name,x,y,pid) values('COMP203', 'Big Data Basic', 35, 128
 insert into subject(id,name,x,y,pid) values('COMP204', 'Baisc Programming', 35, 128, 1);
 
 
-insert into subject(id,name,x,y,pid) values('COMP114', 'Algorithm', 35, 128, 6);
+insert into subject(id,name,x,y,pid) values('COMP114', 'Algorithm1', 35, 128, 6);
 insert into subject(id,name,x,y,pid) values('COMP115', 'C++ language', 35, 128, 6);
+insert into subject(id,name,x,y,pid) values('COMP116', 'Algorithm2', 35, 128, 6);
+
+
 
 insert into subject(id,name,x,y,pid) values('COMP331', 'Data Structure', 35, 128, 5);
-insert into subject(id,name,x,y,pid) values('COMP305', 'Digital Art Media', 35, 128, 4);
+insert into subject(id,name,x,y,pid) values('COMP332', 'Data Structure Programming', 35, 128, 5);
+insert into subject(id,name,x,y,pid) values('COMP333', 'System Programming', 35, 128, 5);
+insert into subject(id,name,x,y,pid) values('COMP334', 'Network Programming', 35, 128, 5);
+
+
+insert into subject(id,name,x,y,pid) values('COMP401', 'Digital Art Media', 35, 128, 4);
 
 insert into subject(id,name,x,y,pid) values('COMP305', 'Digital Art Media', 35, 128, 2);
+insert into subject(id,name,x,y,pid) values('COMP306', 'Computer Structure', 35, 128, 2);
+insert into subject(id,name,x,y,pid) values('COMP307', 'Java Programming', 35, 128, 2);
+insert into subject(id,name,x,y,pid) values('COMP308', 'Automata', 35, 128, 2);
+
 
 
 
@@ -43,7 +55,33 @@ insert into subject(id,name,x,y,pid) values('COMP305', 'Digital Art Media', 35, 
 insert into sugang values('COMP104', 1);
 insert into sugang values('COMP114', 1);
 
--- baord
+
+insert into sugang values('COMP401', 2013105104);
+insert into sugang values('COMP114', 2013105104);
+insert into sugang values('COMP305', 2013105104);
+insert into sugang values('COMP306', 2013105104);
+insert into sugang values('COMP307', 2013105104);
+insert into sugang values('COMP308', 2013105104);
+
+insert into sugang values('COMP401', 2017107111);
+insert into sugang values('COMP114', 2017107111);
+insert into sugang values('COMP305', 2017107111);
+insert into sugang values('COMP306', 2017107111);
+insert into sugang values('COMP307', 2017107111);
+insert into sugang values('COMP308', 2017107111);
+
+insert into sugang values('COMP308', 2016107333);
+insert into sugang values('COMP114', 2016107333);
+insert into sugang values('COMP305', 2016107333);
+insert into sugang values('COMP306', 2016107333);
+insert into sugang values('COMP307', 2016107333);
+insert into sugang values('COMP308', 2016107333);
+
+
+
+
+
+- baord
 insert into board(category,code,id,name,title,content) 
        values ('announcement','COMP104',11,'정설영','test','test');
 insert into board(category,code,id,name,title,content) 
