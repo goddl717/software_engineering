@@ -10,13 +10,12 @@ var login2Router = require('./routers/login2');
 var subjectRoomRouter = require('./routers/subjectroom');
 var subjectRoom2Router = require('./routers/subjectroom2');
 
-
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    // user: 'root',
-    // password: 'eorn',
-    user: 'sunwoo',
-    password: 'Sunwoo123!',
+    user: 'root',
+    password: 'qwerty1234',
+    //user: 'sunwoo',
+    //password: 'Sunwoo123!',
     database: 'lms'
 });
 
@@ -25,11 +24,8 @@ dbConnection.connect(); //db접속 //한번만.
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
-
 //view로 json 파일을 보낸다. 
 //이런 의미로 봐도 될듯.
-
-
 
 app.get('/makesubject', function(req, res) {
     res.sendFile(__dirname + '/app/makesubject.html');
@@ -68,7 +64,6 @@ app.get('/signup2', function(req, res) {
     res.sendFile(__dirname + '/app/signup2.html');
 });
 
-
 app.get('/myroom', function(req, res) {
     res.sendFile(__dirname + '/app/myroom.html');
 });
@@ -77,18 +72,13 @@ app.get('/myroom2', function(req, res) {
     res.sendFile(__dirname + '/app/myroom2.html');
 });
 
-
-
-
-
 app.get('/makesubjectproc', function(req, res) {
 
     var code = req.query.id;
     var name = req.query.name;
-    var x = req.query.x;
-    var y = req.query.y;
+    var x = req.query.lat_input;
+    var y = req.query.lng_input;
     var pid = req.query.pid
-    var ran = "";
 
     var sql = 'INSERT INTO subject(id,name,x,y,randomnum,pid)VALUES(?,?,?,?,"",?)';
 
@@ -101,14 +91,8 @@ app.get('/makesubjectproc', function(req, res) {
             console.log(rows.insertId);
             //res.send(rows);
             res.redirect("/main2?id=" + pid);
-
-
-
         }
     });
-
-
-
 });
 app.get('/myroomproc2', function(req, res) {
     var id = req.query.id;
@@ -125,11 +109,7 @@ app.get('/myroomproc2', function(req, res) {
             res.end();
         }
     });
-
 });
-
-
-
 
 app.get('/myroomproc', function(req, res) {
     var id = req.query.id;
@@ -145,7 +125,6 @@ app.get('/myroomproc', function(req, res) {
             res.end();
         }
     });
-
 });
 
 app.get('/lectureroom1', function(req, res) {
@@ -155,7 +134,6 @@ app.get('/lectureroom1', function(req, res) {
 app.get('/lectureroom2', function(req, res) {
     res.sendFile(__dirname + '/app/lectureroom2.html');
 });
-
 
 app.get('/attendance', function(req, res) {
     var code = req.query.code;
@@ -167,14 +145,11 @@ app.get('/attendance', function(req, res) {
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
             console.log(err);
-
         } else {
             console.log(rows.insertId);
             res.send(rows);
-
         }
     });
-
 });
 
 app.get('/attendance_status', function(req,res){
@@ -188,9 +163,7 @@ app.get('/attendance_status', function(req,res){
             res.send(rows);
         }
     });
-
 });
-
 
 app.get('/enrollproc', function(req, res) {
     var id = req.query.id;
@@ -202,14 +175,11 @@ app.get('/enrollproc', function(req, res) {
     dbConnection.query(sql, params, function(err, rows, fields) {
         if (err) {
             console.log(err);
-
         } else {
             console.log(rows.insertId);
             res.send(rows);
-
         }
     });
-
 });
 
 app.get('/login2proc', function(req, res) {
@@ -230,7 +200,6 @@ app.get('/login2proc', function(req, res) {
             res.end();
         }
     });
-
 });
 
 //교수단에서 출석 번호를 랜덤 생성할때 쓰는 것.
@@ -394,6 +363,22 @@ app.get('/login1proc', function(req, res) {
     });
 });
 
+app.get('/updatelocationproc', function(req, res) {
+    var x = req.query.lat_input;
+    var y = req.query.lng_input;
+    var code = req.query.code_input;
+    var id = req.query.pid_input
+
+    var sql = 'UPDATE subject SET x=' + x + ', y=' + y +' where id=\'' + code + '\';';
+    dbConnection.query(sql, function(err, rows, fields) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(rows);
+            res.redirect("/lectureroom2?id=" + id + "&code=" + code);
+        }
+    });
+});
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/app/index.html');
@@ -402,8 +387,6 @@ app.get('/', function(req, res) {
 app.get('/asdf', function(req, res) {
     res.sendFile(__dirname + '/app/asdf.ejs');
 });
-
-
 
 var server = app.listen(8888, function() {
     console.log('load Success!');

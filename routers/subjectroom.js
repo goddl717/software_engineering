@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
 var multer = require('multer');
-var upload = multer({ dest: "/videos" });
+var upload = multer({ dest: "./videos" });
 var moment = require('moment');     // 날짜 모듈
 
 var dbConnection = mysql.createConnection({
