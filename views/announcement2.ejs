@@ -14,10 +14,21 @@
 <html>
 
 <head>
-    <h1>공지사항</h1>
-    <div>
-        <%=id%>님 반갑습니다.
-    </div>
+
+    <tr>
+        <td colspan="5" style="text-align: center;"><img src="/getLogoImage" /></td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align: center;">
+            <h1>공지 사항</h1>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5" style="text-align: center;">
+            <%=id%>님 반갑습니다.
+        </td>
+    </tr>
+
     <body>
         <div class="col-md-4">
             <table class="table">
@@ -57,23 +68,28 @@
             </table>
 
         </div>
-
-        <div>
-        <form action="/subjectroom2/announcement2/write" method="get">
-            <input type="submit" value="글쓰기">
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-        </form>
-        </div><br>
-
-        <div>
-            <form action="/subjectroom2" method="get">
-                <input type="submit" value="back">
-                <input name="code" type="hidden" value=<%=code%>>
-                <input name="id" type="hidden" value=<%=id%>>
-            </form>
-        </div>
-
+        <table>
+            <tr>
+                <td>
+                    <div>
+                        <form action="/subjectroom2/announcement2/write" method="get">
+                            <input type="submit" value="글쓰기">
+                            <input name="code" type="hidden" value=<%=code%>>
+                            <input name="id" type="hidden" value=<%=id%>>
+                        </form>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <form action="/subjectroom2" method="get">
+                            <input type="submit" value="back">
+                            <input name="code" type="hidden" value=<%=code%>>
+                            <input name="id" type="hidden" value=<%=id%>>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </body>
 
 </html>
