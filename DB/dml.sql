@@ -11,7 +11,12 @@ insert into student values(2016107222,1234, '김정구', 'computer science');
 insert into student values(2016107333,1234, '김종훈', 'computer science');
 
 -- professor
-insert into professor values(11, 11, '정설영', 'computer science');
+insert into professor values(1, 1, '정설영', 'computer science');
+insert into professor values(2, 2, '박영철', 'computer science');
+insert into professor values(3, 3, '탁병철', 'computer science');
+insert into professor values(4, 4, '김항준', 'computer science');
+insert into professor values(5, 5, '김정홍', 'computer science');
+
 
 -- subject
 insert into subject(id,name,x,y,pid) values('COMP104', 'Software Engineering', 11, 22, 11);
