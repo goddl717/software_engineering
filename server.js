@@ -12,10 +12,10 @@ var subjectRoom2Router = require('./routers/subjectroom2');
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'qwerty1234',
-    //user: 'sunwoo',
-    //password: 'Sunwoo123!',
+    //user: 'root',
+    //password: 'qwerty1234',
+    user: 'sunwoo',
+    password: 'Sunwoo123!',
     database: 'lms'
 });
 

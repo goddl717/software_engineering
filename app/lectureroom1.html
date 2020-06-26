@@ -12,56 +12,66 @@
 
 
 <html>
-    <head>
-        <title>LMS - 출석 (학생)</title>
-        <style>
-            th, td {padding: 10px; }
-        </style>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td style="text-align: center;"><img src="/getLogoImage"></td>
-            </tr>
-            <tr>
-                <td><h1 id="random"></h1></td>
-            </tr>
-            <tr>
-                <td><h1><input id="random2" type="text"></h1></td>
-            </tr>
-            <tr>
-                <td style="text-align: center;"><button id="attendance" onclick="attendace()"> 출석하기.</button></td>
-            </tr>
-        </table>
 
-        <table>
-            <tr id="info">
-                <td>수업의 좌표</td>
-            </tr>
-            <tr id="distance">
-                <td>강의실과의 거리</td>
-            </tr>
-            <tr>
-                <td>현재 위치</td>
-                <td colspan="1" id="latitude"></td>
-                <td colspan="1" id="longitude"></td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;"><button id="btn_once" onclick='start_button()'>위치 인증하기</button></td>
-            </tr>
-        </table>
-        <!-- <div display="none">각 각 강의실 방 출석을 할 수 있게 한다.</div> -->
-        <!--
+<head>
+    <title>LMS - 출석 (학생)</title>
+    <style>
+        th,
+        td {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td style="text-align: center;"><img src="/getLogoImage"></td>
+        </tr>
+        <tr>
+            <td>
+                <h1 id="random"></h1>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h1><input id="random2" type="text"></h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;"><button id="attendance" onclick="attendace()"> 출석하기.</button></td>
+        </tr>
+    </table>
+
+    <table>
+        <tr id="info">
+            <td>수업의 좌표</td>
+        </tr>
+        <tr id="distance">
+            <td>강의실과의 거리</td>
+        </tr>
+        <tr>
+            <td>현재 위치</td>
+            <td colspan="1" id="latitude"></td>
+            <td colspan="1" id="longitude"></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center;"><button id="btn_once" onclick='start_button()'>위치 인증하기</button></td>
+        </tr>
+    </table>
+    <!-- <div display="none">각 각 강의실 방 출석을 할 수 있게 한다.</div> -->
+    <!--
         <button id="start" onclick="start()"> 출석 시작 하기.</button>-->
 
-        <div id="info"></div>
-        <div id="distance"></div>
-        <div id="num"></div>
-        <!-- <ul>
+    <div id="info"></div>
+    <div id="dist" style="display:none"></div>
+    <div id="num"></div>
+    <!-- <ul>
             <li>위도:<span id="latitude"></span></li>
             <li>경도:<span id="longitude"></span></li>
-        </ul> -->        
-    </body>
+        </ul> -->
+</body>
+
 </html>
 <script>
     function getParams() {
@@ -115,7 +125,7 @@
 
 <script>
     function attendace() {
-        var dis = document.getElementById("distance");
+        var dis = document.getElementById("dist");
         var attendance = document.getElementById("attendance");
         var temp = parseFloat(dis.innerHTML);
         alert(dis.innerHTML);
@@ -234,9 +244,9 @@
 
                     var temp = document.getElementById("info");
                     temp.insertCell().innerHTML = data[0].x + " " + data[0].y
-                    //temp.innerHTML += data[0].x;
-                    //temp.innerHTML += " "
-                    //temp.innerHTML += data[0].y;
+                        //temp.innerHTML += data[0].x;
+                        //temp.innerHTML += " "
+                        //temp.innerHTML += data[0].y;
 
                     var latitude = document.getElementById("latitude");
                     var longitude = document.getElementById("longitude");
@@ -257,6 +267,8 @@
                     var distance = document.getElementById("distance");
                     distance.insertCell().innerHTML = temp;
                     distance.insertCell().innerHTML = "";
+                    var dist = document.getElementById("dist");
+                    dist.innerHTML += temp;
                     var btn = document.getElementById("btn_once");
                     console.log(btn);
                     btn.disabled = true;

@@ -12,101 +12,124 @@
 
 
 <html>
-    <head>
-        <title>LMS - 출석 시작</title>
-        <style>
-            #map {
-                height: 400px;
-            }
-            th, td {padding: 10px; text-align: center;}
-        </style>
-    </head>
-    <body>
-        <table>
-            <tr>
-                <td colspan="3" style="text-align: center;"><img src="/getLogoImage"></td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;"><h1>출석 시작</h1></td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;"><h1 id="random"></h1></td>
-            </tr>
-            <tr>
-                <td><button id="start" onclick="start()"> 랜덤 번호 생성하기.</button></td>
-                <td><button id="show" onclick= "show_()"> 출석 현황.</button></td>
-                <td><button id="start" onclick="finish()"> 출석 종료.</button></td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center;">
-                    <div id="map"></div>
-                    <script>
-                        function initMap() {
-                            var standard_pos = {lat: 35.890045, lng: 128.611333}
-                            var map = new google.maps.Map(document.getElementById('map'), {zoom:18, center: standard_pos});
-                            var marker = new google.maps.Marker({position: standard_pos, map: map});
-                            map.addListener('click', function(e) {
-                                var clicked_pos = {lat: e.latLng.lat(), lng: e.latLng.lng()};
-                                marker.setPosition(clicked_pos);
-                                var lat_t = document.getElementById("lat");
-                                lat_t.value = e.latLng.lat();
-                                var lng_t = document.getElementById("lng");
-                                lng_t.value = e.latLng.lng();
-                                var code_t = document.getElementById("code");
-                                code_t.value = getParams()["code"];
-                                var pid_t = document.getElementById("pid");
-                                pid_t.value = getParams()["id"];
-                            })
-                        }
-                    </script>
-                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIW_FzauXyIHC8hL5b8FQBOcnQ85khrQ4&callback=initMap"></script>
-                </td>
-            </tr>
-            <form method="get" action="/updatelocationproc">
-                <tr>
-                    <td>위도</td>
-                    <td><input id="lat" name="lat_input" type="text" readonly /></td>
-                </tr>
-                <tr>
-                    <td>경도</td>
-                    <td><input id="lng" name="lng_input" type="text" readonly /></td>
-                </tr>
-                <tr>
-                    <td colspan="3" style="text-align: center;"><input type="submit" value="변경"></td>
-                </tr>
-                <input id="code" name="code_input" type="hidden"/>
-                <input id="pid" name="pid_input" type="hidden"/>
-                
-            </form>
-        </table>
+
+<head>
+    <title>LMS - 출석 시작</title>
+    <style>
+        #map {
+            height: 400px;
+        }
         
-    </body>
+        th,
+        td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td colspan="3" style="text-align: center;"><img src="/getLogoImage"></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center;">
+                <h1>출석 시작</h1>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center;">
+                <h1 id="random"></h1>
+            </td>
+        </tr>
+        <tr>
+            <td><button id="start" onclick="start()"> 랜덤 번호 생성하기.</button></td>
+            <td><button id="show" onclick="show_()"> 출석 현황.</button></td>
+            <td><button id="start" onclick="finish()"> 출석 종료.</button></td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center;">
+                <div id="map"></div>
+                <script>
+                    function initMap() {
+                        var standard_pos = {
+                            lat: 35.890045,
+                            lng: 128.611333
+                        }
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 18,
+                            center: standard_pos
+                        });
+                        var marker = new google.maps.Marker({
+                            position: standard_pos,
+                            map: map
+                        });
+                        map.addListener('click', function(e) {
+                            var clicked_pos = {
+                                lat: e.latLng.lat(),
+                                lng: e.latLng.lng()
+                            };
+                            marker.setPosition(clicked_pos);
+                            var lat_t = document.getElementById("lat");
+                            lat_t.value = e.latLng.lat();
+                            var lng_t = document.getElementById("lng");
+                            lng_t.value = e.latLng.lng();
+                            var code_t = document.getElementById("code");
+                            code_t.value = getParams()["code"];
+                            var pid_t = document.getElementById("pid");
+                            pid_t.value = getParams()["id"];
+                        })
+                    }
+                </script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIW_FzauXyIHC8hL5b8FQBOcnQ85khrQ4&callback=initMap"></script>
+            </td>
+        </tr>
+        <form method="get" action="/updatelocationproc">
+            <tr>
+                <td>위도</td>
+                <td><input id="lat" name="lat_input" type="text" readonly /></td>
+            </tr>
+            <tr>
+                <td>경도</td>
+                <td><input id="lng" name="lng_input" type="text" readonly /></td>
+            </tr>
+            <tr>
+                <td colspan="3" style="text-align: center;"><input type="submit" value="변경"></td>
+            </tr>
+            <input id="code" name="code_input" type="hidden" />
+            <input id="pid" name="pid_input" type="hidden" />
+
+        </form>
+    </table>
+
+</body>
+
 </html>
 
 <script>
-function show_() {
+    function show_() {
         $(document).ready(function() {
             var temp = getParams();
             var code = temp["code"];
 
             $.ajax({
-                type: "GET", 
-                url: "/attendance_status", 
+                type: "GET",
+                url: "/attendance_status",
                 data: {
                     code: code
                 },
-                dataType: "json", 
+                dataType: "json",
                 error: function() {
                     alert("통신실패!!!!");
                 },
                 success: function(data) {
                     alert("출석현황");
-                    var popup = window.open("","Attendance", "top = 100, left = 100, width = 500 ,height = 100, scrollbars=yes, resizable=yes");
+                    var popup = window.open("", "Attendance", "top = 100, left = 100, width = 500 ,height = 100, scrollbars=yes, resizable=yes");
                     var date = data[0]["date"].split("T");
                     popup.document.write(`[오늘 날짜] : ${date[0]}<br>`);
                     popup.document.write(`[학생 ID:]<br>`);
-                    for(var i=0; i<data.length;i++)
-                    {
+                    for (var i = 0; i < data.length; i++) {
                         var id = data[i]["sid"];
                         popup.document.write(`${id}]<br>`);
                     }
