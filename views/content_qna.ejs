@@ -29,17 +29,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                  <div class="page-header">
-                    <h1><small class="pull-right"></small> Comments </h1>
-                  </div> 
-                   <div class="comments-list">
-                   </div>
+                    <div class="page-header">
+                        <h1><small class="pull-right"></small> Comments </h1>
+                    </div>
+                    <div class="comments-list">
+                    </div>
                 </div>
             </div>
         </div>
 
         <form action="/subjectroom/comment" method="get">
-            <p><textarea cols="100" rows="4" name="comments"></textarea></p>            
+            <p><textarea cols="100" rows="4" name="comments"></textarea></p>
             <input type="submit" value="댓글 쓰기">
             <input name="name" type="hidden" value=<%=data[1][0].name%>>
             <input name="code" type="hidden" value=<%=code%>>
@@ -51,32 +51,32 @@
             <input name="existReply" type="hidden" value=<%=data[0][0].R_exist%>>
         </form><br><br>
 
-        <% if (data[2][0].name == data[3][0].name) {%>
+        <% if (data[1][0].name == data[2][0].name) {%>
             <form action="/subjectroom/delete" method="get">
                 <input type="submit" value="글 삭제">
                 <input name="idx" type="hidden" value=<%=idx%>>
                 <input name="code" type="hidden" value=<%=code%>>
                 <input name="id" type="hidden" value=<%=id%>>
             </form><br>
-        <% } %>
+            <% } %>
 
-        <% if (data[2][0].name == data[3][0].name) {%>
-            <form action="/subjectroom/update" method="get">
-                <input type="submit" value="글 수정">
-                <input name="idx" type="hidden" value=<%=idx%>>
-                <input name="code" type="hidden" value=<%=code%>>
-                <input name="id" type="hidden" value=<%=id%>>
-            </form><br>
-        <% } %>
+                <% if (data[1][0].name == data[2][0].name) {%>
+                    <form action="/subjectroom/update" method="get">
+                        <input type="submit" value="글 수정">
+                        <input name="idx" type="hidden" value=<%=idx%>>
+                        <input name="code" type="hidden" value=<%=code%>>
+                        <input name="id" type="hidden" value=<%=id%>>
+                    </form><br>
+                    <% } %>
 
-        <form action="/subjectroom/backAnnouncementList" method="get">
-            <input type="submit" value="목록">
-            <input name="idx" type="hidden" value=<%=idx%>>
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-            <input name="views" type="hidden" value=<%=views%>>
-            <input name="category" type="hidden" value=<%=category%>>
-        </form>
+                        <form action="/subjectroom/backAnnouncementList" method="get">
+                            <input type="submit" value="목록">
+                            <input name="idx" type="hidden" value=<%=idx%>>
+                            <input name="code" type="hidden" value=<%=code%>>
+                            <input name="id" type="hidden" value=<%=id%>>
+                            <input name="views" type="hidden" value=<%=views%>>
+                            <input name="category" type="hidden" value=<%=category%>>
+                        </form>
 
     </body>
 
