@@ -15,31 +15,67 @@
 <html>
 
 <head>
-
-</div>
-<% for(var i = 0 ; i < data.length ; i++){%>
     <table>
-    <tr>
-        <!--template-->
-        <td><%=data[i].idx%> </td>
-        <td><%=data[i].code%> </td>
-        <td><%=data[i].date%> </td>
-        <td>
-            <form ></form>
-        </td>
-    <td>
-        
-    </td>
-    </tr>
-</table>
-        <% }%>
-    
-    <div>
-        <form action="/subjectroom2" method="get">
-            <input type="submit" value="back">
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-        </form>
+        <tr>
+            <td style="text-align: center;"><img src="/getLogoImage" /></td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <h1>Video list</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center;">
+                <%=id%>님 반갑습니다.
+            </td>
+        </tr>
+
+        <div>
+    </table>
+
+
     </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">번호</th>
+                <th scope="col">과목</th>
+                <th scope="col">날짜</th>
+                <th scope="col">파일 명</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <% for(var i = 0 ; i < data.length ; i++){%>
+                <tr>
+                    <!--template-->
+                    <td>
+                        <%=data[i].idx%>
+                    </td>
+                    <td>
+                        <%=data[i].code%>
+                    </td>
+                    <td>
+                        <%=data[i].date%>
+                    </td>
+
+                    <td>
+                        <%=data[i].path%>
+                    </td>
+
+                    <td>
+
+                    </td>
+                </tr>
+    </table>
+    <% }%>
+
+        <div>
+            <form action="/subjectroom2" method="get">
+                <input type="submit" value="back">
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+            </form>
+        </div>
 
 </html>
