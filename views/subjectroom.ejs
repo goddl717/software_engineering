@@ -12,20 +12,33 @@
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
 <html>
-
-<head>
-
+    <head>
+        <title>LMS - 강의실 (학생)</title>
+        <style>
+            th, td {padding: 10px; text-align: center;}
+        </style>
+    </head>
     <body>
-        <div>
-            <%=id%>님 반갑습니다.
-        </div>
-        <div class="col-md-2">
-            <ul>
-                <li><a href="subjectroom/announcement?id=<%=id%>&code=<%=code%>">공지사항</a></li>
-                <li><a href="subjectroom/videolist?id=<%=id%>&code=<%=code%>">온라인 강의</a></li>
-                <li><a href="subjectroom/QnA?id=<%=id%>&code=<%=code%>">Q&A</a></li>
-            </ul>
-        </div>        
+        <table>
+            <tr>
+                <td><img src="/getLogoImage"></td>
+            </tr>
+            <tr>
+                <td>
+                    <div>
+                        <%=id%>님 반갑습니다.
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="subjectroom/announcement?id=<%=id%>&code=<%=code%>">공지사항</a></td>
+            </tr>
+            <tr>
+                <td><a href="subjectroom/videolist?id=<%=id%>&code=<%=code%>">온라인 강의</a></td>
+            </tr>
+            <tr>
+                <td><a href="subjectroom/QnA?id=<%=id%>&code=<%=code%>">Q&A</a></td>
+            </tr>
+        </table>
     </body>
-
 </html>

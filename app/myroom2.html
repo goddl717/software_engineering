@@ -12,12 +12,22 @@
 
 
 <html>
-내가 개설한 강의실 목록.
-<div id="main">
-
-
-</div>
-
+    <head>
+        <title>LMS - 강의실 목록 (교수)</title>
+        <style>
+            th, td {padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <table id="lecturelist">
+            <tr>
+                <td colspan="4" style="text-align: center;"><img src="/getLogoImage"></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="text-align: center;"><h1>강의실 목록</h1></td>
+            </tr>
+        </table>
+    </body>
 </html>
 <script>
     function getParams() {
@@ -65,14 +75,13 @@
             },
             success: function(data) {
                 alert(JSON.stringify(data));
-                var temp = document.getElementById("main");
+                var temp = document.getElementById("lecturelist");
                 for (var i = 0; i < data.length; i++) {
-                    temp.innerHTML += data[i].id;
-                    temp.innerHTML += data[i].name;
-                    temp.innerHTML += "<button onclick =enter('" + data[i].id + "')>출석하기</button>";
-                    temp.innerHTML += "<button onclick = enterroom('" + data[i].id + "')>강의실 입장</button>";
-                    temp.innerHTML += "<br>";
-
+                    var row = temp.insertRow();
+                    row.insertCell().innerHTML = data[i].id;
+                    row.insertCell().innerHTML = data[i].name;
+                    row.insertCell().innerHTML = "<button onclick =enter('" + data[i].id + "')>출석하기</button>";
+                    row.insertCell().innerHTML = "<button onclick = enterroom('" + data[i].id + "')>강의실 입장</button>";
                 }
             }
         });
