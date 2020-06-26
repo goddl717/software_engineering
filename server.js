@@ -31,7 +31,7 @@ app.get('/makesubject', function(req, res) {
     res.sendFile(__dirname + '/app/makesubject.html');
 });
 
-app.use(bodyParser.urlencoded({extended:false}));
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/login1', login1Router);
 app.use('/login2', login2Router);
 app.use('/subjectroom', subjectRoomRouter);
@@ -152,10 +152,10 @@ app.get('/attendance', function(req, res) {
     });
 });
 
-app.get('/attendance_status', function(req,res){
+app.get('/attendance_status', function(req, res) {
     var code = req.query.code;
     var sql = `select * from attendance where code = "${code}" and date = curdate()`;
-    
+
     dbConnection.query(sql, code, function(err, rows, fields) {
         if (err) {
             console.log(err);
@@ -369,7 +369,7 @@ app.get('/updatelocationproc', function(req, res) {
     var code = req.query.code_input;
     var id = req.query.pid_input
 
-    var sql = 'UPDATE subject SET x=' + x + ', y=' + y +' where id=\'' + code + '\';';
+    var sql = 'UPDATE subject SET x=' + x + ', y=' + y + ' where id=\'' + code + '\';';
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
             console.log(err);
@@ -390,7 +390,7 @@ app.get('/asdf', function(req, res) {
 
 app.get('/getLogoImage', function(req, res) {
     fs.readFile('Images/logo.gif', function(error, data) {
-        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.writeHead(200, { 'Content-Type': 'text/html' });
         res.end(data);
     });
 });

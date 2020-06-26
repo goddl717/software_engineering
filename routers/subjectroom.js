@@ -3,14 +3,14 @@ var router = express.Router();
 var mysql = require('mysql');
 var multer = require('multer');
 var upload = multer({ dest: "./videos" });
-var moment = require('moment');     // 날짜 모듈
+var moment = require('moment'); // 날짜 모듈
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'qwerty1234',
-    //user: 'sunwoo',
-    //password: 'Sunwoo123!',
+    //user: 'root',
+    //password: 'qwerty1234',
+    user: 'sunwoo',
+    password: 'Sunwoo123!',
     database: 'lms',
     multipleStatements: true
 });
@@ -42,7 +42,7 @@ router.get('/announcement/content', function(req, res) {
 });
 
 // 게시판 공용
-router.get('/backAnnouncementList', function(req, res) {    // 공지사항 list로 돌아가면서 조회수 +
+router.get('/backAnnouncementList', function(req, res) { // 공지사항 list로 돌아가면서 조회수 +
     var category = req.query.category;
     var id = req.query.id;
     var code = req.query.code;
@@ -58,9 +58,9 @@ router.get('/backAnnouncementList', function(req, res) {    // 공지사항 list
             console.log(err);
         } else {
             console.log(rows);
-            if(category == "announcement"){
+            if (category == "announcement") {
                 res.redirect('/subjectroom/announcement?id=' + id + '&code=' + code);
-            }else {
+            } else {
                 res.redirect('/subjectroom/QnA?id=' + id + '&code=' + code);
             }
         }
@@ -83,7 +83,7 @@ router.get('/videolist', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            res.render('videolist2', { data: rows, id: id, code:code });
+            res.render('videolist2', { data: rows, id: id, code: code });
         }
     });
 });
@@ -136,7 +136,7 @@ router.get('/QnA/write', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var category = "QnA";
-    var sql = 'SELECT name from student where id =' + id;   // QnA는 학생이 작성
+    var sql = 'SELECT name from student where id =' + id; // QnA는 학생이 작성
 
     dbConnection.query(sql, function(err, rows, fields) {
         if (err) {
@@ -153,16 +153,16 @@ router.get('/QnA/content', function(req, res) {
     var code = req.query.code;
     var idx = req.query.idx;
     var views = req.query.views;
-    var existReply = req.query.reply;                      // 답변 유무 (1 or 0)
-    var existComment = parseInt(req.query.existComment);   // 댓글 개수
+    var existReply = req.query.reply; // 답변 유무 (1 or 0)
+    var existComment = parseInt(req.query.existComment); // 댓글 개수
     var category = "QnA";
-    var sql = 'SELECT * FROM board where idx ="' + idx + '";' +     // comment 때문에 packet index 뒤로 하나 보낼려고
-              'SELECT * FROM board where idx ="' + idx + '";' +     //
-              'SELECT * FROM board where idx ="' + idx + '";' +
-              'SELECT name from student where id="' + id + '";';
-    if(existReply==1)
+    var sql = 'SELECT * FROM board where idx ="' + idx + '";' + // comment 때문에 packet index 뒤로 하나 보낼려고
+        'SELECT * FROM board where idx ="' + idx + '";' + //
+        'SELECT * FROM board where idx ="' + idx + '";' +
+        'SELECT name from student where id="' + id + '";';
+    if (existReply == 1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
-    if(existComment>0)
+    if (existComment > 0)
         sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
                 FROM board_comments AS B, (SELECT @rownum:=0) N \
                 where idx = ' + idx + ' \
@@ -173,19 +173,19 @@ router.get('/QnA/content', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            if(existReply==1 && existComment==0){
+            if (existReply == 1 && existComment == 0) {
                 console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==0 && existComment>0){
+            } else if (existReply == 0 && existComment > 0) {
                 console.log(2);
                 res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==1 && existComment>0){
+            } else if (existReply == 1 && existComment > 0) {
                 console.log(3);
                 res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else{
+            } else {
                 console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }  
+            }
         }
     });
 });
@@ -194,23 +194,23 @@ router.get('/comment', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
-    
+
     var views = req.query.views;
     var commenterName = req.query.name;
     var category = "QnA";
     var comments = req.query.comments;
     var existReply = req.query.existReply;
-    var existComment = req.query.existComment;  
-    existComment = parseInt(existComment) + 1;  // 댓글 하나 추가
+    var existComment = req.query.existComment;
+    existComment = parseInt(existComment) + 1; // 댓글 하나 추가
 
     var sql = 'INSERT INTO board_comments(idx, commenterId, commenterName, comments) VALUES(?,?,?,?);';
     params = [idx, id, commenterName, comments];
-        sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';    
-        sql += 'SELECT * FROM board where idx ="' + idx + '";' +   
-               'SELECT name from student where id="' + id + '";';
-    if(existReply==1)
+    sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';
+    sql += 'SELECT * FROM board where idx ="' + idx + '";' +
+        'SELECT name from student where id="' + id + '";';
+    if (existReply == 1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
-    if(existComment>0)
+    if (existComment > 0)
         sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
                 FROM board_comments AS B, (SELECT @rownum:=0) N \
                 where idx = ' + idx + ' \
@@ -221,19 +221,19 @@ router.get('/comment', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            if(existReply==1 && existComment==0){
+            if (existReply == 1 && existComment == 0) {
                 console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==0 && existComment>0){
-                console.log(2);   
+            } else if (existReply == 0 && existComment > 0) {
+                console.log(2);
                 res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==1 && existComment>0){
+            } else if (existReply == 1 && existComment > 0) {
                 console.log(3);
                 res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else{
+            } else {
                 console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }    
+            }
         }
     });
 });
@@ -261,24 +261,24 @@ router.get('/deleteComment', function(req, res) {
     var id = req.query.id;
     var code = req.query.code;
     var idx = req.query.idx;
-    
+
     var views = req.query.views;
     var commenterName = req.query.name;
     var category = "QnA";
     var comments = req.query.comments;
     var existReply = req.query.existReply;
-    var existComment = req.query.existComment;  
-    existComment = parseInt(existComment) - 1;  // 댓글 하나 삭제
+    var existComment = req.query.existComment;
+    existComment = parseInt(existComment) - 1; // 댓글 하나 삭제
     var Cnum = req.query.Cnum;
 
     var sql = 'DELETE FROM board_comments where Cnum = ' + Cnum + ';';
     params = [idx, id, commenterName, comments];
-        sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';    
-        sql += 'SELECT * FROM board where idx ="' + idx + '";' +   
-               'SELECT name from student where id="' + id + '";';
-    if(existReply==1)
+    sql += 'UPDATE board SET C_exist=' + existComment + ' where idx=' + idx + ';';
+    sql += 'SELECT * FROM board where idx ="' + idx + '";' +
+        'SELECT name from student where id="' + id + '";';
+    if (existReply == 1)
         sql += 'SELECT * FROM board_reply where idx =' + idx + ';';
-    if(existComment>0)
+    if (existComment > 0)
         sql += 'SELECT @rownum := @rownum+1 AS ROWNUM, B.* \
                 FROM board_comments AS B, (SELECT @rownum:=0) N \
                 where idx = ' + idx + ' \
@@ -290,19 +290,19 @@ router.get('/deleteComment', function(req, res) {
             console.log(err);
         } else {
             console.log(rows);
-            if(existReply==1 && existComment==0){
+            if (existReply == 1 && existComment == 0) {
                 console.log(1);
                 res.render('content_qna_reply', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==0 && existComment>0){
-                console.log(2);   
+            } else if (existReply == 0 && existComment > 0) {
+                console.log(2);
                 res.render('content_qna_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else if (existReply==1 && existComment>0){
+            } else if (existReply == 1 && existComment > 0) {
                 console.log(3);
                 res.render('content_qna_reply_comment', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }else{
+            } else {
                 console.log(4);
                 res.render('content_qna', { category: category, id: id, code: code, idx: idx, views: views, moment: moment, data: rows });
-            }    
+            }
         }
     });
 });
