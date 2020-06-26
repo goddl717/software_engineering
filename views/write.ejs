@@ -14,20 +14,49 @@
 <html>
 
 <head>
+    <style>
+        th,
+        td {
+            padding: 10px;
+        }
+    </style>
 </head>
+<tr>
+    <td colspan="5" style="text-align: center;"><img src="/getLogoImage" /></td>
+</tr>
+<tr>
+    <td colspan="5" style="text-align: center;">
+        <h1>글 쓰기</h1>
+    </td>
+</tr>
+<tr>
+    <td colspan="5" style="text-align: center;">
+        <%=id%>님 반갑습니다.
+    </td>
+</tr>
 
-    <body>
+<body>
 
-        <form action="/subjectroom2/writeProc" method="get">
-            제목 : <input type="text" name="title"><br>
-            내용 : <p><textarea cols="50" rows="10" name="content"></textarea></p>            
-            <input type="submit" value="저장">
-            <input name="name" type="hidden" value=<%=data[0].name%>>
-            <input name="code" type="hidden" value=<%=code%>>
-            <input name="id" type="hidden" value=<%=id%>>
-            <input name="category" type="hidden" value=<%=category%>>
-        </form>
-        
-    </body>
+    <form action="/subjectroom2/writeProc" method="get">
+        <table>
+            <tr>
+                제목 : <input type="text" name="title"><br>
+            </tr>
+            <tr>
+                내용 :
+            </tr>
+            <tr>
+                <p><textarea cols="50" rows="10" name="content"></textarea></p>
+                <input type="submit" value="저장">
+                <input name="name" type="hidden" value=<%=data[0].name%>>
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+                <input name="category" type="hidden" value=<%=category%>>
+            </tr>
+            </tr>
+        </table>
+    </form>
+
+</body>
 
 </html>
