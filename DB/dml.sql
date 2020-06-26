@@ -4,7 +4,11 @@
 
 
 -- student
-insert into student values(1, 1, '홍길동', 'computer science');
+insert into student values(2013105104,1234, '허영행', 'computer science');
+insert into student values(2015107123,1234, '장선우', 'computer science');
+insert into student values(2017107111,1234, '윤영신', 'computer science');
+insert into student values(2016107222,1234, '김정구', 'computer science');
+insert into student values(2016107333,1234, '김종훈', 'computer science');
 
 -- professor
 insert into professor values(11, 11, '정설영', 'computer science');
