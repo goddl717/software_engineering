@@ -10,19 +10,24 @@
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-
 <html>
-sugang 가능한 목록.
-
-<div id="list">
-
-
-</div>
-
-
+    <head>
+        <title>LMS - 수강신청</title>
+        <style>
+            th, td {padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <table id="suganglist">
+            <tr>
+                <td colspan="2" style="text-align: center;"><img src="/getLogoImage" ></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;"><h1>수강신청 가능 목록</h1></td>
+            </tr>
+        </table>
+    </body>
 </html>
-
-
 
 <script type="text/javascript" language="javascript">
     $(document).ready(function() {
@@ -39,15 +44,12 @@ sugang 가능한 목록.
                 // var temp = JSON.stringify(data);
                 for (var i = 0; i < data.length; i++) {
                     //alert(data[i].name);
-
                     //document.write(data[i].name);
-
-                    document.getElementById("list").innerHTML += data[i].name;
-                    document.getElementById("list").innerHTML += "<button onclick = enroll('" + data[i].id + "')>신청하기</button><br>";
-
+                    var row = document.getElementById("suganglist").insertRow();
+                    row.insertCell().innerHTML = data[i].name;
+                    row.insertCell().innerHTML = "<button onclick = enroll('" + data[i].id + "')>신청하기</button>";
                 }
-
-
+                
             }
         });
     });

@@ -12,14 +12,41 @@
 
 
 <html>
-교수 회원가입 단
-<form method="get" action="/signup2proc">
-    <br> id : <input name="id" type="text">
-    <br> password : <input name="password" type="text">
-    <br> major : <input name="major" type="text">
-    <br> name : <input name="name" type="text">
-    <input type="submit">
-</form>
-
-
+    <head>
+        <title>LMS - 회원가입 (교원)</title>
+        <style>
+            th, td {padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <form method="get" action="/signup2proc">
+            <table>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><img src="/getLogoImage" ></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><h1>교원 회원가입</h1></td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><input name="id" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input name="password" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Major</td>
+                    <td><input name="major" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input name="name" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+    </body>
 </html>

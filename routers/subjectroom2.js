@@ -18,8 +18,8 @@ var upload = multer({ storage: storage });
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    // user: 'root',
-    // password: 'eorn',
+    //user: 'root',
+    //password: 'qwerty1234',
     user: 'sunwoo',
     password: 'Sunwoo123!',
     database: 'lms',

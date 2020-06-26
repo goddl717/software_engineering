@@ -16,35 +16,57 @@
         <style>
             #map {
                 height: 400px;
-                width: 50%;
             }
+            th, td {padding: 10px; }
         </style>
     </head>
     <body>
+        
         <form method="get" action="/makesubjectproc">
-            <br> 과목코드 : <input name="id" type="text">
-            <br> 과목이름 : <input name="name" type="text">
-            <div id="map"></div>
-            <script>
-                function initMap() {
-                    var standard_pos = {lat: 35.890045, lng: 128.611333}
-                    var map = new google.maps.Map(document.getElementById('map'), {zoom:18, center: standard_pos});
-                    var marker = new google.maps.Marker({position: standard_pos, map: map});
-                    map.addListener('click', function(e) {
-                        var clicked_pos = {lat: e.latLng.lat(), lng: e.latLng.lng()};
-                        marker.setPosition(clicked_pos);
-                        var latP = document.getElementById("lat");
-                        latP.value = e.latLng.lat();
-                        var lngP = document.getElementById("lng");
-                        lngP.value = e.latLng.lng();
-                    })
-                }
-            </script>
-            <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIW_FzauXyIHC8hL5b8FQBOcnQ85khrQ4&callback=initMap"></script>
-            <br> 위도 : <input id="lat" name="lat_input" type="text" readonly />
-            <br> 경도 : <input id="lng" name="lng_input" type="text" readonly />
+            <table>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><img src="/getLogoImage" ></td>
+                </tr>
+                <tr>
+                    <td>과목코드</td>
+                    <td><input name="id" type="text"></td>
+                </tr>
+                <tr>
+                    <td>과목이름</td>
+                    <td><input name="name" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><div id="map"></div></td>
+                    <script>
+                        function initMap() {
+                            var standard_pos = {lat: 35.890045, lng: 128.611333}
+                            var map = new google.maps.Map(document.getElementById('map'), {zoom:18, center: standard_pos});
+                            var marker = new google.maps.Marker({position: standard_pos, map: map});
+                            map.addListener('click', function(e) {
+                                var clicked_pos = {lat: e.latLng.lat(), lng: e.latLng.lng()};
+                                marker.setPosition(clicked_pos);
+                                var latP = document.getElementById("lat");
+                                latP.value = e.latLng.lat();
+                                var lngP = document.getElementById("lng");
+                                lngP.value = e.latLng.lng();
+                            })
+                        }
+                    </script>
+                    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIW_FzauXyIHC8hL5b8FQBOcnQ85khrQ4&callback=initMap"></script>
+                </tr>
+                <tr>
+                    <td>위도</td>
+                    <td><input id="lat" name="lat_input" type="text" readonly /></td>
+                </tr>
+                <tr>
+                    <td>경도</td>
+                    <td><input id="lng" name="lng_input" type="text" readonly /></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><input type="submit" value="개설"></td>
+                </tr>
+            </table>
             <br> <input name="pid" value="" type="hidden">
-            <br> <input type="submit" value="개설">
         </form>
     </body>
 </html>

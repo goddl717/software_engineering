@@ -13,11 +13,29 @@
 
 
 <html>
-교수 메인 화면 <br>
-<div id="info"></div>
+    <head>
+        <title>LMS - 메인 (교수)</title>
+        <style>
+            th, td {padding: 10px; text-align: center;}
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td style="text-align: center;"><img src="/getLogoImage" /></td>
+            </tr>
+            <tr>
+                <td><div id="info"></div></td>
+            </tr>
+            <tr>
+                <td><button id="btn_sugang" onclick='make_subject()' style="width: 150px;">강좌 개설하기.</button><br></td>
+            </tr>
+            <tr>
+                <td><button id="btn_goto" onclick='goto()' style="width: 150px;">강의실 입장하기.</button></td>
+            </tr>
+        </table>
+    </body>
 <br>
-<button id="btn_sugang" onclick='make_subject()'>강좌 개설하기.</button><br>
-<button id="btn_goto" onclick='goto()'>강의실 입장하기.</button>
 
 </html>
 

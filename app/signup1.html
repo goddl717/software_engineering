@@ -10,16 +10,42 @@
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
-
 <html>
-학생 회원가입 단
-<form method="get" action="/signup1proc">
-    <br> id : <input name="id" type="text">
-    <br> password : <input name="password" type="text">
-    <br> major : <input name="major" type="text">
-    <br> name : <input name="name" type="text">
-    <input type="submit">
-</form>
-
-
+    <head>
+        <title>LMS - 회원가입 (학생)</title>
+        <style>
+            th, td {padding: 10px; }
+        </style>
+    </head>
+    <body>
+        <form method="get" action="/signup1proc">
+            <table>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><img src="/getLogoImage" ></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><h1>학생 회원가입</h1></td>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><input name="id" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input name="password" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Major</td>
+                    <td><input name="major" type="text"></td>
+                </tr>
+                <tr>
+                    <td>Name</td>
+                    <td><input name="name" type="text"></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><input type="submit"></td>
+                </tr>
+            </table>
+        </form>
+    </body>
 </html>

@@ -1,11 +1,31 @@
+<!-- 합쳐지고 최소화된 최신 CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+<!-- 부가적인 테마 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
 <html>
  <head>
      <title>LMS - 로그인 구분</title>
+     <style>
+        th, td {padding: 10px; text-align: center;}
+    </style>
  </head>
  <body>
-    <h2>학습관리시스템 사용자 선택</h2>
-    <button id="btn_sugang" onclick='sugang()'>학생로그인</button><br>
-    <button id="btn_goto" onclick='goto()'>교수로그인</button>
+    <table>
+        <tr>
+            <td><img src="/getLogoImage"></td>
+        </tr>
+        <tr>
+            <td><h3>사용자 선택</h3></td>
+        </tr>
+        <tr>
+            <td><button id="btn_sugang" onclick='sugang()'>학생로그인</button></td>
+        </tr>
+        <tr>
+            <td><button id="btn_goto" onclick='goto()'>교수로그인</button>    </td>
+        </tr>
+    </table>
  </body>
 </html>
 

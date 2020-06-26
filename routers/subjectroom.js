@@ -7,10 +7,10 @@ var moment = require('moment');     // 날짜 모듈
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    // user: 'root',
-    // password: 'eorn',
-    user: 'sunwoo',
-    password: 'Sunwoo123!',
+    user: 'root',
+    password: 'qwerty1234',
+    //user: 'sunwoo',
+    //password: 'Sunwoo123!',
     database: 'lms',
     multipleStatements: true
 });

@@ -12,10 +12,10 @@ var subjectRoom2Router = require('./routers/subjectroom2');
 
 var dbConnection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: 'qwerty1234',
-    //user: 'sunwoo',
-    //password: 'Sunwoo123!',
+    //user: 'root',
+    //password: 'qwerty1234',
+    user: 'sunwoo',
+    password: 'Sunwoo123!',
     database: 'lms'
 });
 
@@ -386,6 +386,13 @@ app.get('/', function(req, res) {
 
 app.get('/asdf', function(req, res) {
     res.sendFile(__dirname + '/app/asdf.ejs');
+});
+
+app.get('/getLogoImage', function(req, res) {
+    fs.readFile('Images/logo.gif', function(error, data) {
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end(data);
+    });
 });
 
 var server = app.listen(8888, function() {
