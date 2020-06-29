@@ -12,22 +12,30 @@
 
 
 <html>
-    <head>
-        <title>LMS - 강의실 목록 (학생)</title>
-        <style>
-            th, td {padding: 10px; }
-        </style>
-    </head>
-    <body>
-        <table id="lecturelist">
-            <tr>
-                <td colspan="4" style="text-align: center;"><img src="/getLogoImage"></td>
-            </tr>
-            <tr>
-                <td colspan="4" style="text-align: center;"><h1>강의실 목록</h1></td>
-            </tr>
-        </table>
-    </body>
+
+<head>
+    <title>LMS - 강의실 목록 (학생)</title>
+    <style>
+        th,
+        td {
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <table id="lecturelist">
+        <tr>
+            <td colspan="4" style="text-align: center;"><img src="/getLogoImage"></td>
+        </tr>
+        <tr>
+            <td colspan="4" style="text-align: center;">
+                <h1>강의실 목록</h1>
+            </td>
+        </tr>
+    </table>
+</body>
+
 </html>
 <script>
     function getParams() {
@@ -74,7 +82,7 @@
                 alert("통신실패!!!!");
             },
             success: function(data) {
-                alert(JSON.stringify(data));
+                //alert(JSON.stringify(data));
                 var temp = document.getElementById("lecturelist");
 
                 for (var i = 0; i < data.length; i++) {

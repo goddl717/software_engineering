@@ -13,41 +13,12 @@
 
 
 <html>
+교수 로그인 화면 <br> id : <input id="id" type="text">
+<br> password : <input id="password" type="text">
+<br>
 
-<head>
-    <title>LMS - 학생 로그인</title>
-    <style>
-        th,
-        td {
-            padding: 10px;
-        }
-    </style>
-</head>
-
-<body>
-    <table>
-        <tr>
-            <td colspan="2" style="text-align: center;"><img src="/getLogoImage" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <h1>학생 로그인</h1>
-            </td>
-        </tr>
-        <tr>
-            <td>id</td>
-            <td><input id="id" type="text"></td>
-        </tr>
-        <tr>
-            <td>password </td>
-            <td><input id="password" type="password"></td>
-        </tr>
-        <tr>
-            <td><button id="login" onclick='login()'>로그인</button></td>
-            <td><button id="signup" onclick='location.href = "/signup1"'>회원가입</button></td>
-        </tr>
-    </table>
-</body>
+<button id="login" onclick='login()'>로그인</button><br>
+<button id="signup" onclick='location.href = "/signup2"'>회원가입</button>
 
 </html>
 
@@ -59,7 +30,7 @@
 
         $.ajax({
             type: "GET",
-            url: "/login1proc",
+            url: "/login2proc",
             data: {
                 id: id,
                 password: password
@@ -69,10 +40,10 @@
                 alert('통신실패!! ');
             },
             success: function(data) {
-                //alert(JSON.stringify(data));
+                alert(JSON.stringify(data));
                 if (data.length == 0) {
                     alert("잘못된 아이디나 패스워드입니다.");
-                    location.href = '/login1';
+                    location.href = '/login2';
                 } else {
                     //자바스크립트 형반환 너무 별론데..
                     //alert(JSON.stringify(data[0]));
@@ -81,8 +52,9 @@
                     //alert(temp3.id);
                     var stringid = temp3.id.toString();
                     alert("로그인 합니다.");
-                    location.href = '/main?id=' + stringid;
+                    location.href = '/main2?id=' + stringid;
                     //document.write("123");
+
                 }
             }
         });

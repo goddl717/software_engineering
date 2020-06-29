@@ -25,15 +25,8 @@
 </head>
 
 <body>
+    <h1>학생 로그인</h1>
     <table>
-        <tr>
-            <td colspan="2" style="text-align: center;"><img src="/getLogoImage" /></td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center;">
-                <h1>학생 로그인</h1>
-            </td>
-        </tr>
         <tr>
             <td>id</td>
             <td><input id="id" type="text"></td>
@@ -69,7 +62,7 @@
                 alert('통신실패!! ');
             },
             success: function(data) {
-                //alert(JSON.stringify(data));
+                alert(JSON.stringify(data));
                 if (data.length == 0) {
                     alert("잘못된 아이디나 패스워드입니다.");
                     location.href = '/login1';
