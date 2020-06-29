@@ -78,7 +78,7 @@ CREATE TABLE attendance
 (
     code varchar(25),
     sid varchar(25),
-    date date,
+    date date
 );
 
 -- incomplete
