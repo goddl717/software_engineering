@@ -64,7 +64,20 @@
             <input name="views" type="hidden" value=<%=views%>>
             <input name="existComment" type="hidden" value=<%=data[2][0].C_exist%>>
             <input name="existReply" type="hidden" value=<%=data[2][0].R_exist%>>
-        </form><br>
+        </form><br><br>
+
+        <div>
+            답변 쓰기 : 
+            <form action="/subjectroom2/reply" method="get">
+                <p><textarea cols="100" rows="7" name="reply"></textarea></p>            
+                <input type="submit" value="답변하기">
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+                <input name="name" type="hidden" value=<%=data[1][0].name%>>
+                <input name="update" type="hidden" value=0>
+            </form>
+        </div><br>
 
         <form action="/subjectroom2/backAnnouncementList2" method="get">
             <input type="submit" value="목록">

@@ -62,6 +62,19 @@
             답변 : <%=data[4][0].reply%>
         </div><br>
 
+        <div>
+            답변 수정 : 
+            <form action="/subjectroom2/reply" method="get">
+                <p><textarea cols="100" rows="7" name="reply"></textarea></p>            
+                <input type="submit" value="답변수정">
+                <input name="idx" type="hidden" value=<%=idx%>>
+                <input name="code" type="hidden" value=<%=code%>>
+                <input name="id" type="hidden" value=<%=id%>>
+                <input name="name" type="hidden" value=<%=data[3][0].name%>>
+                <input name="update" type="hidden" value=1>
+            </form>
+        </div><br>
+
         <form action="/subjectroom2/backAnnouncementList2" method="get">
             <input type="submit" value="목록">
             <input name="idx" type="hidden" value=<%=idx%>>
